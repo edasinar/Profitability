@@ -17,7 +17,11 @@ class ProductDetailActivity : AppCompatActivity() {
         var position = intent.getIntExtra("position",0)
         val productsDatabase  = this.openOrCreateDatabase("Product_Database", MODE_PRIVATE,null)
         var cursor = productsDatabase.rawQuery("SELECT * FROM products WHERE id = ${(position+2)}" , null)
-        binding.imageView.setImageResource(ProductsActivity.imageArray[position+1])
+        if((position+1)>=ProductsActivity.imageArray.size){
+            binding.imageView.setImageResource(ProductsActivity.imageArray[(position-ProductsActivity.imageArray.size)+1])
+        }else{
+            binding.imageView.setImageResource(ProductsActivity.imageArray[position+1])
+        }
 
         val adIx = cursor.getColumnIndex("ÜrünAdı")
         val barkodIx = cursor.getColumnIndex("Barkod")

@@ -56,7 +56,8 @@ class ProductsActivity : AppCompatActivity() {
         var barkod = binding.barkodEditText.getText().toString()
         var isim = binding.isimEditText.getText().toString()
         var kategori = binding.kategoriEditText.getText().toString()
-        var cursor = database.rawQuery("SELECT * FROM products WHERE Barkod LIKE '%${barkod}%' OR ÜrünAdı LIKE '%${isim}%' LIKE Kategoriİsmi = '%${kategori}%'" , null)
+        var cursor = database.rawQuery("SELECT * FROM products WHERE Barkod LIKE '%${barkod}%' OR ÜrünAdı LIKE '%${isim}%' OR Kategoriİsmi LIKE '%${kategori}%'" , null)
+        //
         var idIx = cursor.getColumnIndex("id")
         var indexFilter = ArrayList<Int>()
         while (cursor.moveToNext()){
@@ -68,6 +69,10 @@ class ProductsActivity : AppCompatActivity() {
         binding.recycleView.layoutManager = LinearLayoutManager(this)
         val productAdapter = ProductsAdapter(indexFilter,database)
         binding.recycleView.adapter = productAdapter
+
+    }
+
+    fun yeniUrunKaydet(view : View){
 
     }
 }

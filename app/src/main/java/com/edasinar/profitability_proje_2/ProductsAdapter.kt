@@ -40,7 +40,12 @@ class ProductsAdapter(val index : ArrayList<Int>,val productsDatabase : SQLiteDa
             satisFiyat = cursor.getString(satisFiyatiIx)
             urunAdi = cursor.getString(urunAd)
         }
-        holder.gorsel.setImageResource(imageArray[position])
+        if(position>= imageArray.size){
+            holder.gorsel.setImageResource(imageArray[position- imageArray.size])
+        }
+        else {
+            holder.gorsel.setImageResource(imageArray[position])
+        }
         holder.barkod.text = barkod
         holder.komisyon.text = komisyon
         holder.satisFiyat.text = satisFiyat

@@ -94,56 +94,62 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="@id/vertical_only"
                 app:layout_constraintTop_toBottomOf="@+id/vertical_only"
                 tools:ignore="MissingConstraints">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+
                     <TextView
+                        android:id="@+id/gorsell"
                         android:layout_width="50dp"
                         android:layout_height="30dp"
-                        android:text="Görsel"
-                        android:id="@+id/gorsell"
                         android:layout_margin="5dp"
-                        android:gravity="center"></TextView>
+                        android:gravity="center"
+                        android:text="Görsel"></TextView>
+
                     <TextView
-                        android:layout_width="80dp"
-                        android:layout_height="30dp"
                         android:id="@+id/barkodd"
-                        android:text="Barkod"
-                        android:layout_margin="5dp"
-                        android:gravity="center"></TextView>
-                    <TextView
                         android:layout_width="80dp"
                         android:layout_height="30dp"
+                        android:layout_margin="5dp"
+                        android:gravity="center"
+                        android:text="Barkod"></TextView>
+
+                    <TextView
                         android:id="@+id/komisyonn"
-                        android:text="Komisyon"
-                        android:layout_margin="5dp"
-                        android:gravity="center"></TextView>
-                    <TextView
                         android:layout_width="80dp"
                         android:layout_height="30dp"
+                        android:layout_margin="5dp"
+                        android:gravity="center"
+                        android:text="Komisyon"></TextView>
+
+                    <TextView
                         android:id="@+id/satisFiyatii"
-                        android:text="Satış Fiyatı"
-                        android:layout_margin="5dp"
-                        android:gravity="center"></TextView>
-                    <TextView
                         android:layout_width="80dp"
                         android:layout_height="30dp"
-                        android:id="@+id/Detayy"
-                        android:text="Detay"
                         android:layout_margin="5dp"
-                        android:gravity="center"></TextView>
+                        android:gravity="center"
+                        android:text="Satış Fiyatı"></TextView>
+
+                    <TextView
+                        android:id="@+id/Detayy"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:layout_margin="5dp"
+                        android:gravity="center"
+                        android:text="Detay"></TextView>
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycleView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="300dp"
                     android:layout_marginStart="1dp"
                     android:layout_marginEnd="1dp"
                     android:layout_marginBottom="1dp"
@@ -153,6 +159,14 @@
                     app:layout_constraintStart_toStartOf="parent">
 
                 </androidx.recyclerview.widget.RecyclerView>
+
+                <Button
+                    android:id="@+id/kaydet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="300dp"
+                    android:onClick="yeniUrunKaydet"
+                    android:text="KAYDET" />
 
             </LinearLayout>
 
