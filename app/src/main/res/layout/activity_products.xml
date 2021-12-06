@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProductsActivity">
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/vertical_only"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                tools:ignore="MissingConstraints"
+                android:orientation="horizontal">
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/firstHorizontal"
+                    android:layout_width="205dp"
+                    android:layout_height="200dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/barkodFiltre"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:gravity="center|right"
+                        android:text="barkod          " />
+
+                    <TextView
+                        android:id="@+id/isimFiltre"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:gravity="center|right"
+                        android:text="isim          " />
+
+                    <TextView
+                        android:id="@+id/kategoriFiltre"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:gravity="center|right"
+                        android:text="kategori          " />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/secondHorizontal"
+                    android:layout_width="205dp"
+                    android:layout_height="200dp"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/barkodEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:ems="10"
+                        android:hint="Ornek: 3lugoldset "
+                        android:inputType="textPersonName"
+                        android:textSize="12sp" />
+
+                    <EditText
+                        android:id="@+id/isimEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:ems="10"
+                        android:hint="Ornek: 3lü gold yüzük seti"
+                        android:inputType="textPersonName"
+                        android:textSize="12sp" />
+
+                    <EditText
+                        android:id="@+id/kategoriEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:ems="10"
+                        android:hint="Ornek : Bijüteri Yüzük"
+                        android:inputType="textPersonName"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minHeight="48dp"
+                        android:onClick="filterProducts"
+                        android:text="Filtrele" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="@id/vertical_only"
+                app:layout_constraintTop_toBottomOf="@+id/vertical_only"
+                tools:ignore="MissingConstraints">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="30dp"
+                        android:text="Görsel"
+                        android:id="@+id/gorsell"
+                        android:layout_margin="5dp"
+                        android:gravity="center"></TextView>
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:id="@+id/barkodd"
+                        android:text="Barkod"
+                        android:layout_margin="5dp"
+                        android:gravity="center"></TextView>
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:id="@+id/komisyonn"
+                        android:text="Komisyon"
+                        android:layout_margin="5dp"
+                        android:gravity="center"></TextView>
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:id="@+id/satisFiyatii"
+                        android:text="Satış Fiyatı"
+                        android:layout_margin="5dp"
+                        android:gravity="center"></TextView>
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:id="@+id/Detayy"
+                        android:text="Detay"
+                        android:layout_margin="5dp"
+                        android:gravity="center"></TextView>
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycleView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginEnd="1dp"
+                    android:layout_marginBottom="1dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StockReceiptActivity">
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/vertical_only"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/stockLinearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tarih"
+                    android:text="Tarih"
+                    android:textSize="24dp"
+                    android:gravity="center"
+                    android:layout_margin="10dp"></TextView>
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/islem"
+                    android:text="İşlem"
+                    android:textSize="24dp"
+                    android:gravity="center"
+                    android:layout_margin="10dp"></TextView>
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/urun"
+                    android:textSize="24dp"
+                    android:text="Ürün"
+                    android:gravity="center"
+                    android:layout_margin="10dp"></TextView>
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/adet"
+                    android:text="Adet"
+                    android:textSize="24dp"
+                    android:gravity="center"
+                    android:layout_margin="10dp"></TextView>
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tutar"
+                    android:text="Tutar"
+                    android:textSize="24dp"
+                    android:gravity="center"
+                    android:layout_margin="10dp"></TextView>
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/borc"
+                    android:textSize="24dp"
+                    android:text="Borç"
+                    android:gravity="center"
+                    android:layout_margin="10dp"></TextView>
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/alacak"
+                    android:text="Alacak"
+                    android:textSize="24dp"
+                    android:gravity="center"
+                    android:layout_margin="10dp"></TextView>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/stockRecyclerView"
+                app:layout_constraintBottom_toBottomOf="@id/stockLinearLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/stockLinearLayout">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

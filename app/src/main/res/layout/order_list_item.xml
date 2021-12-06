@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/barkodTextView"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:hint="BARKOD"
+        android:gravity="center">
+    </TextView>
+
+    <TextView
+        android:id="@+id/kargoFirmasiTextView"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:hint="KARGO FİRMASI"
+        android:gravity="center">
+
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/siparisTarihiTextView"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:hint="SİPARİŞ TARİHİ"
+        android:gravity="center">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/siparisNumarasiTextView"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:hint="SİPARİŞ NUMARASI"
+        android:gravity="center">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/aliciTextView"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:hint="ALICI"
+        android:gravity="center">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/urunAdiTextView"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:hint="ÜRÜN ADI"
+        android:gravity="center">
+
+    </TextView>
+    <TextView
+        android:id="@+id/komisyonTextView"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:hint="KOMİSYON"
+        android:gravity="center">
+
+    </TextView>
+    <TextView
+        android:id="@+id/adetTextView"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:hint="ADET"
+        android:gravity="center">
+
+    </TextView>
+    <TextView
+        android:id="@+id/tutarTextView"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:hint="TOPLAM TUTAR"
+        android:gravity="center">
+
+    </TextView>
+    <TextView
+        android:id="@+id/kargoTutarTextView"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:hint="TOPLAM KARGO TUTARI"
+        android:gravity="center">
+
+    </TextView>
+
+</LinearLayout>
