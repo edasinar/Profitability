@@ -41,7 +41,7 @@ class ProductsAdapter(val index : ArrayList<Int>,val productsDatabase : SQLiteDa
             urunAdi = cursor.getString(urunAd)
         }
         if(position>= imageArray.size){
-            holder.gorsel.setImageResource(imageArray[position- imageArray.size])
+            holder.gorsel.setImageResource(R.drawable.bos)
         }
         else {
             holder.gorsel.setImageResource(imageArray[position])

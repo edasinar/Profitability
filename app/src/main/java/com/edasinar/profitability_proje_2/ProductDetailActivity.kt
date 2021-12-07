@@ -18,7 +18,7 @@ class ProductDetailActivity : AppCompatActivity() {
         val productsDatabase  = this.openOrCreateDatabase("Product_Database", MODE_PRIVATE,null)
         var cursor = productsDatabase.rawQuery("SELECT * FROM products WHERE id = ${(position+2)}" , null)
         if((position+1)>=ProductsActivity.imageArray.size){
-            binding.imageView.setImageResource(ProductsActivity.imageArray[(position-ProductsActivity.imageArray.size)+1])
+            binding.imageView.setImageResource(R.drawable.bos)
         }else{
             binding.imageView.setImageResource(ProductsActivity.imageArray[position+1])
         }

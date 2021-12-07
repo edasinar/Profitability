@@ -148,6 +148,5 @@ class MainMenuActivity : AppCompatActivity() {
     fun clickDisplayOfNetProfit(view : View){
         val intent = Intent(applicationContext,DisplayOfNetProfitActivity::class.java)
         startActivity(intent)
-        println("click display of net profit")
     }
 }

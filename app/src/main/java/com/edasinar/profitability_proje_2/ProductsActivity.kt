@@ -1,6 +1,7 @@
 package com.edasinar.profitability_proje_2
 
 
+import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -36,7 +37,7 @@ class ProductsActivity : AppCompatActivity() {
             ,R.drawable.laleyzk,R.drawable.beyazyuz,R.drawable.pembeyuz,R.drawable.aurrarisaintbir
             ,R.drawable.periyuzuk,R.drawable.ikilibobble,R.drawable.ovalcizgi,R.drawable.karekemer
             ,R.drawable.aurrarisrmlbir,R.drawable.kabartmayuz,R.drawable.kayayuzuk,R.drawable.aurraricyrkbrgbir
-            ,R.drawable.dikbombe,R.drawable.aurrarifrekansbir,R.drawable.aurraritseklbir,R.drawable.aurrariyprbir,R.drawable.aurrarikmkyz)
+            ,R.drawable.dikbombe,R.drawable.aurrarifrekansbir,R.drawable.aurraritseklbir,R.drawable.aurrariyprbir,R.drawable.aurrarikmkyz,R.drawable.aurrarikmkyz)
         val database = this.openOrCreateDatabase("Product_Database", MODE_PRIVATE,null)
         var cursor = database.rawQuery("SELECT * FROM products" , null)
         var idIx = cursor.getColumnIndex("id")
@@ -73,6 +74,7 @@ class ProductsActivity : AppCompatActivity() {
     }
 
     fun yeniUrunKaydet(view : View){
-
+        val intent = Intent(applicationContext,AddNewProduct::class.java)
+        startActivity(intent)
     }
 }
