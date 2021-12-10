@@ -10,6 +10,7 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.edasinar.profitability_proje_2.databinding.ActivityProductsBinding
+import java.lang.NullPointerException
 
 class ProductsActivity : AppCompatActivity() {
     companion object {

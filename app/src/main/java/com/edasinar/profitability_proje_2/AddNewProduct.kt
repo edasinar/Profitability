@@ -26,7 +26,6 @@ class AddNewProduct : AppCompatActivity() {
 
     private val pickImage = 100
     private var imageUri: Uri? = null
-    private var bitmap : Bitmap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
