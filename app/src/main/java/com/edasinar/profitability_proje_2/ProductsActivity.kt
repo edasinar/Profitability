@@ -13,7 +13,7 @@ import com.edasinar.profitability_proje_2.databinding.ActivityProductsBinding
 
 class ProductsActivity : AppCompatActivity() {
     companion object {
-        lateinit var imageArray: Array<Int>
+        lateinit var imageArray: ArrayList<Int>
     }
     private  var index : ArrayList<Int> = arrayListOf()
     private lateinit var binding: ActivityProductsBinding
@@ -28,7 +28,7 @@ class ProductsActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
     fun productList(){
-        imageArray = arrayOf(R.drawable.uclulugoldset,R.drawable.dortlugoldsetdort,
+        imageArray = arrayListOf(R.drawable.uclulugoldset,R.drawable.dortlugoldsetdort,
             R.drawable.dortlugoldsetuc,R.drawable.besligoldsetyedi,R.drawable.asimetrikcentik
             ,R.drawable.hasiryzkbir,R.drawable.yvrlkyzkbir,R.drawable.dgmyzkbir
             ,R.drawable.incezincirbir,R.drawable.mrsvnsyzk,R.drawable.ynsblkyzkdort

@@ -179,11 +179,11 @@
 
     <ImageView
         android:id="@+id/secilenResim"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.077"
+        app:layout_constraintHorizontal_bias="0.061"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
@@ -193,20 +193,11 @@
         android:layout_width="186dp"
         android:layout_height="48dp"
         android:layout_marginTop="36dp"
+        android:onClick="resimSec"
         android:text="Galeriden Seç"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.822"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/resimCekButton"
-        android:layout_width="186dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="20dp"
-        android:text="Kameradan Çek"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.822"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/galeridenSecButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

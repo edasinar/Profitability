@@ -11,7 +11,8 @@
         android:theme="@style/Theme.Profitability_Proje_2">
         <activity
             android:name=".AddNewProduct"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".ProductsActivity"/>
         <activity
             android:name=".DisplayOfNetProfitActivity"
             android:exported="false"
