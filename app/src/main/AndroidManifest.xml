@@ -14,28 +14,32 @@
             android:exported="false" />
         <activity
             android:name=".DisplayOfNetProfitActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainMenuActivity"/>
         <activity
             android:name=".ReceiptOfExpensesActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainMenuActivity" />
         <activity
             android:name=".StockReceiptActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainMenuActivity" />
         <activity
             android:name=".OrdersActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainMenuActivity" />
         <activity
             android:name=".ProductDetailActivity"
             android:exported="false" />
         <activity
             android:name=".ProductsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainMenuActivity"/>
         <activity
             android:name=".MainMenuActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
