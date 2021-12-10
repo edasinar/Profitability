@@ -1,12 +1,14 @@
 package com.edasinar.profitability_proje_2
 
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.database.sqlite.SQLiteDatabase
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.edasinar.profitability_proje_2.ProductsActivity.Companion.imageArray
+import com.edasinar.profitability_proje_2.databinding.ActivityProductsBinding
 import com.edasinar.profitability_proje_2.databinding.ProductListItemBinding
 
 
@@ -16,7 +18,9 @@ class ProductsAdapter(val index : ArrayList<Int>,val productsDatabase : SQLiteDa
         val barkod = binding.barkodTextViewR
         val komisyon = binding.komisyonTextViewR
         val satisFiyat = binding.satisTextViewR
+        val silButton = binding.silButton
     }
+
     private lateinit var binding : ProductListItemBinding
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductHolder {
         binding = ProductListItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
@@ -26,10 +30,10 @@ class ProductsAdapter(val index : ArrayList<Int>,val productsDatabase : SQLiteDa
     override fun onBindViewHolder(holder: ProductHolder, position: Int) {
         val currentItem = index[position]
         var cursor = productsDatabase.rawQuery("SELECT * FROM products WHERE id = ${index?.get(position)}" , null)
-        val barkodIx = cursor.getColumnIndex("Barkod")
-        val komisyonIx = cursor.getColumnIndex("KomisyonOranı")
-        val satisFiyatiIx = cursor.getColumnIndex("SatisFiyat")
-        val urunAd = cursor.getColumnIndex("ÜrünAdı")
+        val barkodIx = cursor.getColumnIndex("ÜrünBarkodu")
+        val komisyonIx = cursor.getColumnIndex("Komisyon")
+        val satisFiyatiIx = cursor.getColumnIndex("SatışTutarı")
+        val urunAd = cursor.getColumnIndex("İsim")
         var barkod =""
         var komisyon = ""
         var satisFiyat = ""
@@ -49,7 +53,11 @@ class ProductsAdapter(val index : ArrayList<Int>,val productsDatabase : SQLiteDa
         holder.barkod.text = barkod
         holder.komisyon.text = komisyon
         holder.satisFiyat.text = satisFiyat
+        holder.silButton.setOnClickListener {
+            //geri gidip tekrar girince siliyor!!
+            productsDatabase.execSQL("DELETE FROM products WHERE id = ${index?.get(position)}")
 
+        }
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, ProductDetailActivity::class.java)
             val deger : Int = position - 1
@@ -61,4 +69,6 @@ class ProductsAdapter(val index : ArrayList<Int>,val productsDatabase : SQLiteDa
     override fun getItemCount(): Int {
         return index.size
     }
+
+
 }

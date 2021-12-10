@@ -8,6 +8,8 @@ import com.edasinar.profitability_proje_2.databinding.ActivityOrdersBinding
 class OrdersActivity : AppCompatActivity() {
     private  var index : ArrayList<Int> = arrayListOf()
 
+    //VERİLER GİRDİ OLARAK ALINACAK DATABASEE EKLENECEK
+    //BARKODLAR İLE EŞLEŞMESİ GEREK DEĞERLER BUTONA TIKLANDIKTAN SONRA TEMİZLENECEK
     private lateinit var binding: ActivityOrdersBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,8 +24,5 @@ class OrdersActivity : AppCompatActivity() {
             println(cursor.getString(idIx))
             index.add(cursor.getString(idIx).toInt())
         }
-        binding.recycleView.layoutManager = LinearLayoutManager(this)
-        val ordersAdapter = OrdersAdapter(index,database)
-        binding.recycleView.adapter = ordersAdapter
     }
 }

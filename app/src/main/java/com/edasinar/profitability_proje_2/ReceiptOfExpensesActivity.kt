@@ -4,8 +4,12 @@ import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.edasinar.profitability_proje_2.databinding.ActivityReceiptOfExpensesBinding
 import java.time.LocalDate
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 class ReceiptOfExpensesActivity : AppCompatActivity() {
 
@@ -21,6 +25,18 @@ class ReceiptOfExpensesActivity : AppCompatActivity() {
         database.execSQL("CREATE TABLE IF NOT EXISTS expenses (id INTEGER PRIMARY KEY, Tarih VARCHAR, Gider DOUBLE, Aciklama VARCHAR)")
     }
 
+    private fun isSpace(barkod: String): Boolean{
+        val space: Pattern = Pattern.compile("\\s+")
+        val matcherSpace: Matcher = space.matcher(barkod)
+        val containsSpace: Boolean = matcherSpace.find()
+
+        if (containsSpace === true) {
+            return true
+        }
+
+        return false
+    }
+
     fun kaydet(view: View){
         var yil = binding.yilEditText.getText().toString()
         var ay = binding.ayEditText.getText().toString()
@@ -28,21 +44,42 @@ class ReceiptOfExpensesActivity : AppCompatActivity() {
         var gider = binding.toplamGiderEditText.getText().toString().toDouble()
         var aciklama = binding.aciklamaEditText.getText().toString()
 
-        var tarih: LocalDate = LocalDate.parse(yil+"-"+ay+"-"+gun)
-        database.execSQL("INSERT INTO expenses (Tarih,Gider,Aciklama) VALUES ('${tarih}',${gider},'${aciklama}')")
-        var cursor = database.rawQuery("SELECT * FROM expenses",null)
-        var tari = cursor.getColumnIndex("Tarih")
-        var gide = cursor.getColumnIndex("Gider")
-        var aciklam = cursor.getColumnIndex("Aciklama")
-        while (cursor.moveToNext()){
-            println(cursor.getString(tari) + "  " + cursor.getString(gide) + "  " + cursor.getString(aciklam))
+        if(yil.isNullOrBlank()||ay.isNullOrBlank()||gun.isNullOrBlank()||gider.toString().isNullOrBlank()){
+            val alert = AlertDialog.Builder(this)
+            alert.setTitle("UYARI!")
+            alert.setMessage("Sadece açıklamayı boş bırakabilirsiniz")
+            alert.setNegativeButton("OK"){dialog, which->
+                Toast.makeText(applicationContext,"Try Again", Toast.LENGTH_LONG).show()}
+
+            alert.show()
+            binding.yilEditText.setText(null)
+            binding.ayEditText.setText(null)
+            binding.gunEditText.setText(null)
+            binding.toplamGiderEditText.setText(null)
+            binding.aciklamaEditText.setText(null)
+        }else {
+            if(aciklama.isNullOrBlank()){
+                aciklama = "-"
+            }
+            database.execSQL("INSERT INTO other_expenses (Yıl,Ay,Gün,Tutar,Açıklama) VALUES ('${yil}','${ay}','${gun}',${gider},'${aciklama}')")
+            var cursor = database.rawQuery("SELECT * FROM other_expenses", null)
+            var tari = cursor.getColumnIndex("Yıl")
+            var gide = cursor.getColumnIndex("Tutar")
+            var aciklam = cursor.getColumnIndex("Açıklama")
+            while (cursor.moveToNext()) {
+                println(
+                    cursor.getString(tari) + "  " + cursor.getString(gide) + "  " + cursor.getString(
+                        aciklam
+                    )
+                )
+            }
+            println("veritabanına başarıyla kaydedildi")
+            binding.yilEditText.setText(null)
+            binding.ayEditText.setText(null)
+            binding.gunEditText.setText(null)
+            binding.toplamGiderEditText.setText(null)
+            binding.aciklamaEditText.setText(null)
         }
-        println("veritabanına başarıyla kaydedildi")
-        binding.yilEditText.setText(null)
-        binding.ayEditText.setText(null)
-        binding.gunEditText.setText(null)
-        binding.toplamGiderEditText.setText(null)
-        binding.aciklamaEditText.setText(null)
 
     }
 

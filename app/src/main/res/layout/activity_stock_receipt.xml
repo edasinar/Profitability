@@ -5,92 +5,157 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".StockReceiptActivity">
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/vertical_only"
-            android:orientation="vertical">
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center|right"
+        android:text="YIL"
+        app:layout_constraintEnd_toStartOf="@+id/stokYilEditText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
-                android:id="@+id/stockLinearLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tarih"
-                    android:text="Tarih"
-                    android:textSize="24dp"
-                    android:gravity="center"
-                    android:layout_margin="10dp"></TextView>
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center|right"
+        android:text="ÜRÜN BARKODU"
+        app:layout_constraintEnd_toStartOf="@+id/stokBarkodEditText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
-                <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/islem"
-                    android:text="İşlem"
-                    android:textSize="24dp"
-                    android:gravity="center"
-                    android:layout_margin="10dp"></TextView>
-                <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/urun"
-                    android:textSize="24dp"
-                    android:text="Ürün"
-                    android:gravity="center"
-                    android:layout_margin="10dp"></TextView>
-                <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/adet"
-                    android:text="Adet"
-                    android:textSize="24dp"
-                    android:gravity="center"
-                    android:layout_margin="10dp"></TextView>
-                <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tutar"
-                    android:text="Tutar"
-                    android:textSize="24dp"
-                    android:gravity="center"
-                    android:layout_margin="10dp"></TextView>
-                <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/borc"
-                    android:textSize="24dp"
-                    android:text="Borç"
-                    android:gravity="center"
-                    android:layout_margin="10dp"></TextView>
-                <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/alacak"
-                    android:text="Alacak"
-                    android:textSize="24dp"
-                    android:gravity="center"
-                    android:layout_margin="10dp"></TextView>
-            </LinearLayout>
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center|right"
+        android:text="ALINAN ADET"
+        app:layout_constraintEnd_toStartOf="@+id/stokAdetEditText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/stockRecyclerView"
-                app:layout_constraintBottom_toBottomOf="@id/stockLinearLayout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/stockLinearLayout">
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center|right"
+        android:text="ÜRÜN ADET TUTARI"
+        app:layout_constraintEnd_toStartOf="@+id/stokBirimEditText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
-            </androidx.recyclerview.widget.RecyclerView>
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center|right"
+        android:text="GÜN"
+        app:layout_constraintEnd_toStartOf="@+id/stokGunEditText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
-        </LinearLayout>
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center|right"
+        android:text="AY"
+        app:layout_constraintEnd_toStartOf="@+id/stokAyEditText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-    </HorizontalScrollView>
+    <EditText
+        android:id="@+id/stokYilEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="40dp"
+        android:ems="10"
+
+        android:hint="Örnek: 2020"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/stokGunEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="40dp"
+        android:ems="10"
+        android:hint="Örnek: 02"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stokAyEditText" />
+
+    <EditText
+        android:id="@+id/stokBarkodEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="40dp"
+        android:ems="10"
+        android:hint="Örnek: 3lugoldset"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stokGunEditText" />
+
+    <EditText
+        android:id="@+id/stokAdetEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="40dp"
+        android:ems="10"
+        android:hint="Örnek: 10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stokBirimEditText" />
+
+    <EditText
+        android:id="@+id/stokBirimEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="40dp"
+        android:ems="10"
+        android:hint="Örnek: 4.0"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stokBarkodEditText" />
+
+    <EditText
+        android:id="@+id/stokAyEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="40dp"
+        android:ems="10"
+        android:hint="Örnek: 10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stokYilEditText" />
+
+    <Button
+        android:id="@+id/stokKaydetButton"
+        android:layout_width="232dp"
+        android:layout_height="48dp"
+        android:onClick="stokKaydet"
+        android:text="KAYDET"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.763" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

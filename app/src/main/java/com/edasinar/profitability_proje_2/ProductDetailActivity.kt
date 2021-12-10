@@ -13,6 +13,9 @@ class ProductDetailActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        supportActionBar?.title = "         ÜRÜN DETAYLARI"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         val intent = intent
         var position = intent.getIntExtra("position",0)
         val productsDatabase  = this.openOrCreateDatabase("Product_Database", MODE_PRIVATE,null)
@@ -23,11 +26,11 @@ class ProductDetailActivity : AppCompatActivity() {
             binding.imageView.setImageResource(ProductsActivity.imageArray[position+1])
         }
 
-        val adIx = cursor.getColumnIndex("ÜrünAdı")
-        val barkodIx = cursor.getColumnIndex("Barkod")
-        val komisyonIx = cursor.getColumnIndex("KomisyonOranı")
-        val fiyatIx = cursor.getColumnIndex("SatisFiyat")
-        val renkIx = cursor.getColumnIndex("ÜrünRengi")
+        val adIx = cursor.getColumnIndex("İsim")
+        val barkodIx = cursor.getColumnIndex("ÜrünBarkodu")
+        val komisyonIx = cursor.getColumnIndex("Komisyon")
+        val fiyatIx = cursor.getColumnIndex("SatışTutarı")
+        val renkIx = cursor.getColumnIndex("Renk")
         val markaIx = cursor.getColumnIndex("Marka")
 
         var ad = ""

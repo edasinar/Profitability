@@ -1,5 +1,6 @@
 package com.edasinar.profitability_proje_2
 
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.database.sqlite.SQLiteDatabase
@@ -16,7 +17,9 @@ class MainMenuActivity : AppCompatActivity() {
     private lateinit var productDatabase: SQLiteDatabase
     private lateinit var stockReceiptDatabase: SQLiteDatabase
     private lateinit var expensesDatabase : SQLiteDatabase
+    private lateinit var otherExpensesDatabase : SQLiteDatabase
 
+    private lateinit var sharedPreferences: SharedPreferences
 
     private lateinit var binding: ActivityMainMenuBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,29 +27,44 @@ class MainMenuActivity : AppCompatActivity() {
         binding = ActivityMainMenuBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        supportActionBar?.setTitle("            WELCOME TO MAIN MENU")
-        /*expensesDatabase = this.openOrCreateDatabase("Receipt_Of_Expenses", MODE_PRIVATE,null)
-        stockReceiptDatabase()
-        orderingPeopleListDatabase()
-        ordersDatabase()
-        productDatabase()*/
+        supportActionBar?.title = "            KARLILIK HESAPLAMA"
+
+        sharedPreferences = this.getSharedPreferences("prof_pref", Context.MODE_PRIVATE)
+        if(sharedPreferences.getInt("isOpenDatabase",0) == 0){
+            sharedPreference()
+        }
+        else{
+            println("asdfghj")
+        }
     }
 
+    private fun sharedPreference(){
+        //sharedPreferences.edit().putInt("isOpenDatabase",0).apply()
+        if (sharedPreferences.getInt("isOpenDatabase",0) == 0){
+            expensesDatabase = this.openOrCreateDatabase("Receipt_Of_Expenses", MODE_PRIVATE,null)
+            stockReceiptDatabase()
+            orderingPeopleListDatabase()
+            ordersDatabase()
+            productDatabase()
+            otherExpensesDatabase()
+            sharedPreferences.edit().putInt("isOpenDatabase", 1).apply()
+        }
+    }
 
-    fun stockReceiptDatabase(){
-        val stockReceipt = InputStreamReader(assets.open("stock_receipt.csv"))
-        var reader = BufferedReader(stockReceipt)
+    private fun stockReceiptDatabase(){
+        val stockReceipt = InputStreamReader(assets.open("product_cost_and_stock.csv"))
+        val reader = BufferedReader(stockReceipt)
         val stockReceiptCol : ArrayList<String> = reader.readLine().split(",") as ArrayList<String>
         stockReceiptCol[0] = stockReceiptCol[0].split(stockReceiptCol[0][0])[1]
 
         try
         {
             stockReceiptDatabase = this.openOrCreateDatabase("Stock_Receipt" , MODE_PRIVATE, null)
-            stockReceiptDatabase.execSQL("CREATE TABLE IF NOT EXISTS stock_receipt (id INTEGER PRIMARY KEY , ${stockReceiptCol[0]} VARCHAR , ${stockReceiptCol[1]} VARCHAR , ${stockReceiptCol[2]} VARCHAR , ${stockReceiptCol[3]} INTEGER , ${stockReceiptCol[4]} DOUBLE , ${stockReceiptCol[5]} DOUBLE, ${stockReceiptCol[6]} DOUBLE)")
+            stockReceiptDatabase.execSQL("CREATE TABLE IF NOT EXISTS stock_receipt (id INTEGER PRIMARY KEY , ${stockReceiptCol[0]} VARCHAR , ${stockReceiptCol[1]} VARCHAR , ${stockReceiptCol[2]} INTEGER , ${stockReceiptCol[3]} DOUBLE , ${stockReceiptCol[4]} DOUBLE)")
             var line: String?
             while (reader.readLine().also { line = it } != null) {
                 val temp = line?.split(",")
-                stockReceiptDatabase.execSQL("INSERT INTO stock_receipt (${stockReceiptCol[0]},${stockReceiptCol[1]},${stockReceiptCol[2]},${stockReceiptCol[3]},${stockReceiptCol[4]},${stockReceiptCol[5]},${stockReceiptCol[6]}) VALUES ('${temp?.get(0)}' , '${temp?.get(1)}' ,'${temp?.get(2)}',${temp?.get(3)?.toInt()},${temp?.get(4)?.toDouble()},${temp?.get(5)?.toDouble()},${temp?.get(6)?.toDouble()})")
+                stockReceiptDatabase.execSQL("INSERT INTO stock_receipt (${stockReceiptCol[0]},${stockReceiptCol[1]},${stockReceiptCol[2]},${stockReceiptCol[3]},${stockReceiptCol[4]}) VALUES ('${temp?.get(0)}' , '${temp?.get(1)}' ,${temp?.get(2)?.toInt()},${temp?.get(3)?.toDouble()},${temp?.get(4)?.toDouble()})")
             }
             reader.close()
         }
@@ -57,9 +75,9 @@ class MainMenuActivity : AppCompatActivity() {
         }
     }
 
-    fun orderingPeopleListDatabase(){
+    private fun orderingPeopleListDatabase(){
         val peoplecsv = InputStreamReader(assets.open("ordering_people_list.csv"))
-        var reader = BufferedReader(peoplecsv)
+        val reader = BufferedReader(peoplecsv)
         reader.readLine()
         try
         {
@@ -67,7 +85,7 @@ class MainMenuActivity : AppCompatActivity() {
             orderingPeopleListDatabase.execSQL("CREATE TABLE IF NOT EXISTS ordering_people_list (id INTEGER PRIMARY KEY , isimSoyisim VARCHAR)")
             var line: String?
             while (reader.readLine().also { line = it } != null) {
-                val temp = line?.toString()
+                val temp = line
                 orderingPeopleListDatabase.execSQL("INSERT INTO ordering_people_list (isimSoyisim) VALUES ('${temp}')")
             }
             reader.close()
@@ -79,19 +97,19 @@ class MainMenuActivity : AppCompatActivity() {
         }
     }
 
-    fun ordersDatabase(){
+    private fun ordersDatabase(){
         val orderscsv = InputStreamReader(assets.open("orders.csv"))
-        var reader = BufferedReader(orderscsv)
+        val reader = BufferedReader(orderscsv)
         val orderCol : ArrayList<String> = reader.readLine().split(",") as ArrayList<String>
         orderCol[0] = orderCol[0].split(orderCol[0][0])[1]
         try
         {
             ordersDatabase = this.openOrCreateDatabase("ORDERS" , MODE_PRIVATE, null)
-            ordersDatabase.execSQL("CREATE TABLE IF NOT EXISTS orders (id INTEGER PRIMARY KEY , ${orderCol[0]} VARCHAR , ${orderCol[1]} VARCHAR , ${orderCol[2]} VARCHAR , ${orderCol[3]} INTEGER , ${orderCol[4]} VARCHAR , ${orderCol[5]} VARCHAR , ${orderCol[6]} DOUBLE , ${orderCol[7]} INTEGER , ${orderCol[8]} DOUBLE , ${orderCol[9]} DOUBLE)")
+            ordersDatabase.execSQL("CREATE TABLE IF NOT EXISTS orders (id INTEGER PRIMARY KEY , ${orderCol[0]} VARCHAR , ${orderCol[1]} VARCHAR , ${orderCol[2]} INTEGER , ${orderCol[3]} VARCHAR , ${orderCol[4]} INTEGER , ${orderCol[5]} DOUBLE)")
             var line: String?
             while (reader.readLine().also { line = it } != null) {
                 val temp = line?.split(",")
-                ordersDatabase.execSQL("INSERT INTO orders (${orderCol[0]},${orderCol[1]},${orderCol[2]},${orderCol[3]},${orderCol[4]},${orderCol[5]},${orderCol[6]},${orderCol[7]},${orderCol[8]},${orderCol[9]}) VALUES ('${temp?.get(0)}' , '${temp?.get(1)}' ,'${temp?.get(2)}',${temp?.get(3)?.toDouble()},'${temp?.get(4)}','${temp?.get(5)}' ,${temp?.get(6)?.toDouble()},${temp?.get(7)?.toInt()},${temp?.get(8)?.toDouble()},${temp?.get(9)?.toDouble()})")
+                ordersDatabase.execSQL("INSERT INTO orders (${orderCol[0]},${orderCol[1]},${orderCol[2]},${orderCol[3]},${orderCol[4]},${orderCol[5]}) VALUES ('${temp?.get(0)}' , '${temp?.get(1)}' ,${temp?.get(2)?.toInt()},'${temp?.get(3)}',${temp?.get(4)?.toInt()},${temp?.get(5)?.toDouble()})")
             }
             reader.close()
         }
@@ -103,7 +121,7 @@ class MainMenuActivity : AppCompatActivity() {
 
     }
 
-    fun productDatabase(){
+    private fun productDatabase(){
         val productcsv = InputStreamReader(assets.open("products.csv"))
         val reader = BufferedReader(productcsv)
         val productCol : ArrayList<String> = reader.readLine().split(",") as ArrayList<String>
@@ -111,11 +129,11 @@ class MainMenuActivity : AppCompatActivity() {
         try
         {
             productDatabase = this.openOrCreateDatabase("Product_Database" , MODE_PRIVATE, null)
-            productDatabase.execSQL("CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY , ${productCol[0]} VARCHAR , ${productCol[1]} DOUBLE , ${productCol[2]} VARCHAR , ${productCol[3]} VARCHAR , ${productCol[4]} VARCHAR , ${productCol[5]} VARCHAR, ${productCol[6]} DOUBLE, ${productCol[7]} INT)")
+            productDatabase.execSQL("CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY , ${productCol[0]} VARCHAR , ${productCol[1]} DOUBLE , ${productCol[2]} VARCHAR , ${productCol[3]} VARCHAR , ${productCol[4]} VARCHAR , ${productCol[5]} DOUBLE)")
             var line: String?
             while (reader.readLine().also { line = it } != null) {
                 val temp = line?.split(",")
-                productDatabase.execSQL("INSERT INTO products (${productCol[0]},${productCol[1]},${productCol[2]},${productCol[3]},${productCol[4]},${productCol[5]},${productCol[6]},${productCol[7]}) VALUES ('${temp?.get(0)}' , ${temp?.get(1)?.toDouble()} ,'${temp?.get(2)}','${temp?.get(3)}','${temp?.get(4)}','${temp?.get(5)}','${temp?.get(6)?.toDouble()}','${temp?.get(7)?.toInt()}')")
+                productDatabase.execSQL("INSERT INTO products (${productCol[0]},${productCol[1]},${productCol[2]},${productCol[3]},${productCol[4]},${productCol[5]}) VALUES ('${temp?.get(0)}' , ${temp?.get(1)?.toDouble()} ,'${temp?.get(2)}','${temp?.get(3)}','${temp?.get(4)}',${temp?.get(5)?.toDouble()})")
             }
             reader.close()
         }catch (e : Exception){
@@ -124,6 +142,24 @@ class MainMenuActivity : AppCompatActivity() {
         }
     }
 
+    private fun otherExpensesDatabase(){
+        val otherExpensescsv = InputStreamReader(assets.open("other_expenses.csv"))
+        val reader = BufferedReader(otherExpensescsv)
+        val otherExpensesCol : ArrayList<String> = reader.readLine().split(",") as ArrayList<String>
+        //otherExpensesCol[0] = otherExpensesCol[0].split(otherExpensesCol[0][0])[1]
+        try{
+            otherExpensesDatabase = this.openOrCreateDatabase("Receipt_Of_Expenses", MODE_PRIVATE,null)
+            otherExpensesDatabase.execSQL("CREATE TABLE IF NOT EXISTS other_expenses (id INTEGER PRIMARY KEY,Yıl VARCHAR,Ay VARCHAR,Gün VARCHAR,Tutar DOUBLE,Açıklama VARCHAR)")
+            var line: String?
+            while(reader.readLine().also { line = it } != null){
+                val temp = line?.split(",")
+                otherExpensesDatabase.execSQL("INSERT INTO other_expenses (Yıl,Ay,Gün,Tutar,Açıklama) VALUES ('${temp?.get(0)}','${temp?.get(1)}','${temp?.get(2)}',${temp?.get(3)?.toDouble()},'${temp?.get(4)}')")
+            }
+            reader.close()
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+    }
 
     fun clickProducts(view: View) {
         val intent = Intent(applicationContext, ProductsActivity::class.java)
@@ -131,8 +167,8 @@ class MainMenuActivity : AppCompatActivity() {
     }
 
     fun clickOrders(view: View){
-        val intent = Intent(applicationContext,OrdersActivity::class.java)
-        startActivity(intent)
+        /*val intent = Intent(applicationContext,OrdersActivity::class.java)
+        startActivity(intent)*/
     }
 
     fun clickStockReceipt(view: View){
@@ -146,7 +182,7 @@ class MainMenuActivity : AppCompatActivity() {
     }
 
     fun clickDisplayOfNetProfit(view : View){
-        val intent = Intent(applicationContext,DisplayOfNetProfitActivity::class.java)
-        startActivity(intent)
+        /*val intent = Intent(applicationContext,DisplayOfNetProfitActivity::class.java)
+        startActivity(intent)*/
     }
 }

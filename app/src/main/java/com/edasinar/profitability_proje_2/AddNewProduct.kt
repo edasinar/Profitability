@@ -4,14 +4,39 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.edasinar.profitability_proje_2.databinding.ActivityAddNewProductBinding
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
+/*
+*       BU SAYFADA ÜRÜN EKLENİRKEN FOTOĞRAF GALARİDEN ÇEKİLECEK
+*       EĞER SEÇİLMEMİŞSE BOŞ FOTOĞRAFI ATANACAK!!
+*
+*       EKLEDİKTEN SONRA ÜRÜNLER EKRANINA GERİ DÖN
+*
+* */
 class AddNewProduct : AppCompatActivity() {
     private lateinit var binding: ActivityAddNewProductBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddNewProductBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.title = "      YENİ ÜRÜN EKLE"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    private fun isSpace(barkod: String): Boolean{
+        val space: Pattern = Pattern.compile("\\s+")
+        val matcherSpace: Matcher = space.matcher(barkod)
+        val containsSpace: Boolean = matcherSpace.find()
+
+        if (containsSpace === true) {
+            return true
+        }
+
+        return false
     }
 
     fun addDatabase(view: View){
@@ -19,24 +44,32 @@ class AddNewProduct : AppCompatActivity() {
         val komisyon = binding.newKomisyonEditText.getText().toString()
         val renk = binding.newRenkEditText.getText().toString()
         val marka = binding.newMarkaEditText.getText().toString()
-        val kategori = binding.newKategoriEditText.getText().toString()
         val urun = binding.newUrunEditText.getText().toString()
         val fiyat = binding.newFiyatEditText.getText().toString()
-        val stok = binding.newStokAdetEditText.getText().toString()
-        val database = this.openOrCreateDatabase("Product_Database", MODE_PRIVATE,null)
-        database.execSQL("INSERT INTO products (Barkod,KomisyonOranı,ÜrünRengi,Marka,Kategoriİsmi,ÜrünAdı,SatisFiyat,ÜrünStokAdedi) VALUES('${barkod}',${komisyon.toDouble()},'${renk}','${marka}','${kategori}','${urun}',${fiyat.toDouble()},${stok.toInt()})")
+        if(isSpace(barkod)){
+            println("barkodda boşluk vardır lütfen boşluk bırakmadan girin")
+            val alert = AlertDialog.Builder(this)
+            alert.setTitle("UYARI!")
+            alert.setMessage("Barkod boşluk karakterini içeremez. Başında ortasında ya da sonunda boşluk bırakmayınız.")
+            alert.setNegativeButton("OK"){dialog, which->
+                Toast.makeText(applicationContext,"Try Again", Toast.LENGTH_LONG).show()}
 
-        binding.newBarkodEditText.setText(null)
-        binding.newKomisyonEditText.setText(null)
-        binding.newRenkEditText.setText(null)
-        binding.newMarkaEditText.setText(null)
-        binding.newKategoriEditText.setText(null)
-        binding.newUrunEditText.setText(null)
-        binding.newFiyatEditText.setText(null)
-        binding.newStokAdetEditText.setText(null)
+            alert.show()
+            binding.newBarkodEditText.setText(null)
+        }else {
+            val database = this.openOrCreateDatabase("Product_Database", MODE_PRIVATE, null)
+            database.execSQL("INSERT INTO products (ÜrünBarkodu,Komisyon,Renk,Marka,İsim,SatışTutarı) VALUES('${barkod}',${komisyon.toDouble()},'${renk}','${marka}','${urun}',${fiyat.toDouble()})")
 
-        val intent = Intent(applicationContext,ProductsActivity::class.java)
-        startActivity(intent)
+            binding.newBarkodEditText.setText(null)
+            binding.newKomisyonEditText.setText(null)
+            binding.newRenkEditText.setText(null)
+            binding.newMarkaEditText.setText(null)
+            binding.newUrunEditText.setText(null)
+            binding.newFiyatEditText.setText(null)
+
+            val intent = Intent(applicationContext, ProductsActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 }
