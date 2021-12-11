@@ -18,8 +18,6 @@ import kotlin.collections.ArrayList
 class OrdersActivity : AppCompatActivity() {
     private  var index : ArrayList<Int> = arrayListOf()
 
-    //VERİLER GİRDİ OLARAK ALINACAK DATABASEE EKLENECEK
-    //BARKODLAR İLE EŞLEŞMESİ GEREK DEĞERLER BUTONA TIKLANDIKTAN SONRA TEMİZLENECEK
     private lateinit var binding: ActivityOrdersBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +48,6 @@ class OrdersActivity : AppCompatActivity() {
                         sel++
                         i += 2
                     }
-                    //Fix for pressing delete next to a forward slash
                     if (clean == cleanC) sel--
                     if (clean.length < 8) {
                         clean = clean + ddmmyyyy.substring(clean.length)
@@ -121,9 +118,6 @@ class OrdersActivity : AppCompatActivity() {
             binding.adetSiparis.setText(null)
             binding.tutarSiparis.setText(null)
         }else {
-            val num = binding.numaraSiparis.getText().toString().toInt()
-            val adt = binding.adetSiparis.getText().toString().toInt()
-            val ttr = binding.tutarSiparis.getText().toString().toDouble()
             println(tarih.replace("/","-"))
             if (!barkodKiyasla(barkod)) {
                 val alert = AlertDialog.Builder(this)
@@ -138,6 +132,20 @@ class OrdersActivity : AppCompatActivity() {
             } else {
                 println("ürün başarıyla kaydedildi!")
                 //DATABASE'E EKLENECEK KISIM!!
+                var database = this.openOrCreateDatabase("ORDERS", MODE_PRIVATE,null)
+                database.execSQL("INSERT INTO orders (Barkod,SiparişTarihi,SiparişNumarası,Alıcı,Adet,FaturalanacakTutar) VALUES ('${barkod}','${tarih.replace("/","-")}',${numara.toInt()},'${alici}',${adet.toInt()},${tutar.toDouble()})")
+
+                var cursor = database.rawQuery("SELECT * FROM ordering_people_list",null)
+                var isimIx = cursor.getColumnIndex("isimSoyisim")
+                var sayac = 0
+                while (cursor.moveToNext()){
+                    if(alici.equals(cursor.getString(isimIx))){
+                        sayac = 1
+                    }
+                }
+                if(sayac == 0){
+                    database.execSQL("INSERT INTO ordering_people_list (isimSoyisim) VALUES ('${alici}')")
+                }
             }
         }
     }
