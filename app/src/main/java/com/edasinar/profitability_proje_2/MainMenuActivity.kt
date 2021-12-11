@@ -16,8 +16,8 @@ class MainMenuActivity : AppCompatActivity() {
     private lateinit var ordersDatabase: SQLiteDatabase
     private lateinit var productDatabase: SQLiteDatabase
     private lateinit var stockReceiptDatabase: SQLiteDatabase
-    private lateinit var expensesDatabase : SQLiteDatabase
     private lateinit var otherExpensesDatabase : SQLiteDatabase
+    private lateinit var displayNetProfitDatabase: SQLiteDatabase
 
     private lateinit var sharedPreferences: SharedPreferences
 
@@ -41,12 +41,12 @@ class MainMenuActivity : AppCompatActivity() {
     private fun sharedPreference(){
         //sharedPreferences.edit().putInt("isOpenDatabase",0).apply()
         if (sharedPreferences.getInt("isOpenDatabase",0) == 0){
-            expensesDatabase = this.openOrCreateDatabase("Receipt_Of_Expenses", MODE_PRIVATE,null)
             stockReceiptDatabase()
             orderingPeopleListDatabase()
             ordersDatabase()
             productDatabase()
             otherExpensesDatabase()
+            netProfitDisplayDatabase()
             sharedPreferences.edit().putInt("isOpenDatabase", 1).apply()
         }
     }
@@ -161,6 +161,15 @@ class MainMenuActivity : AppCompatActivity() {
         }
     }
 
+    private fun netProfitDisplayDatabase(){
+        try {
+            displayNetProfitDatabase = this.openOrCreateDatabase("Display_Net_Profit", MODE_PRIVATE,null)
+            displayNetProfitDatabase.execSQL("CREATE TABLE IF NOT EXISTS net_profits (id INTEGER PRIMARY KEY, Aylar VARCHAR, BrütKar DOUBLE, DiğerGiderler DOUBLE, NetKar DOUBLE)")
+        }catch (e :Exception){
+            e.printStackTrace()
+        }
+    }
+
     fun clickProducts(view: View) {
         val intent = Intent(applicationContext, ProductsActivity::class.java)
         startActivity(intent)
@@ -182,7 +191,7 @@ class MainMenuActivity : AppCompatActivity() {
     }
 
     fun clickDisplayOfNetProfit(view : View){
-        /*val intent = Intent(applicationContext,DisplayOfNetProfitActivity::class.java)
-        startActivity(intent)*/
+        val intent = Intent(applicationContext,DisplayOfNetProfitActivity::class.java)
+        startActivity(intent)
     }
 }
