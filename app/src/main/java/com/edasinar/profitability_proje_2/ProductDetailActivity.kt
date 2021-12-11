@@ -2,6 +2,7 @@ package com.edasinar.profitability_proje_2
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.net.toUri
 import com.edasinar.profitability_proje_2.databinding.ActivityProductDetailBinding
 
 class ProductDetailActivity : AppCompatActivity() {
@@ -21,7 +22,7 @@ class ProductDetailActivity : AppCompatActivity() {
         val productsDatabase  = this.openOrCreateDatabase("Product_Database", MODE_PRIVATE,null)
         var cursor = productsDatabase.rawQuery("SELECT * FROM products WHERE id = ${(position+2)}" , null)
         if((position+1)>=ProductsActivity.imageArray.size){
-            binding.imageView.setImageResource(R.drawable.bos)
+            binding.imageView.setImageURI(ProductsActivity.addImageArray[position - ProductsActivity.imageArray.size].toUri())
         }else{
             binding.imageView.setImageResource(ProductsActivity.imageArray[position+1])
         }

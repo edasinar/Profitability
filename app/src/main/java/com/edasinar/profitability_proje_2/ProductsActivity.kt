@@ -15,6 +15,7 @@ import java.lang.NullPointerException
 class ProductsActivity : AppCompatActivity() {
     companion object {
         lateinit var imageArray: ArrayList<Int>
+        var addImageArray : ArrayList<String> = arrayListOf()
     }
     private  var index : ArrayList<Int> = arrayListOf()
     private lateinit var binding: ActivityProductsBinding

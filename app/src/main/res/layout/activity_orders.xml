@@ -6,118 +6,153 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".OrdersActivity">
-    <HorizontalScrollView
-        android:fillViewport="true"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="50dp"
-                    android:layout_margin="5dp"
-                    android:hint="BARKOD"
-                    android:gravity="center">
-                </TextView>
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="120dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center|right"
+        android:text="BARKOD"
+        app:layout_constraintEnd_toStartOf="@+id/barkodSiparis"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="50dp"
-                    android:layout_margin="5dp"
-                    android:hint="KARGO FİRMASI"
-                    android:gravity="center">
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="120dp"
+        android:layout_height="48dp"
 
+        android:gravity="center|right"
+        android:text="SİPARİŞ TARİHİ"
+        app:layout_constraintEnd_toStartOf="@+id/tarihSiparis"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
-                </TextView>
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="120dp"
+        android:layout_height="48dp"
 
-                <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="50dp"
-                    android:layout_margin="5dp"
-                    android:hint="SİPARİŞ TARİHİ"
-                    android:gravity="center">
+        android:gravity="center|right"
+        android:text="SİPARİŞ NUMARASI"
+        app:layout_constraintEnd_toStartOf="@+id/numaraSiparis"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
-                </TextView>
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="120dp"
+        android:layout_height="48dp"
+        android:gravity="center|right"
+        android:text="ALICI"
+        app:layout_constraintEnd_toStartOf="@+id/aliciSiparis"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
-                <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="50dp"
-                    android:layout_margin="5dp"
-                    android:hint="SİPARİŞ NUMARASI"
-                    android:gravity="center">
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="120dp"
+        android:layout_height="48dp"
+        android:gravity="center|right"
+        android:text="ADET"
+        app:layout_constraintEnd_toStartOf="@+id/adetSiparis"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
-                </TextView>
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="120dp"
+        android:layout_height="48dp"
+        android:gravity="center|right"
+        android:text="TUTAR"
+        app:layout_constraintEnd_toStartOf="@+id/tutarSiparis"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
-                <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="50dp"
-                    android:layout_margin="5dp"
-                    android:hint="ALICI"
-                    android:gravity="center">
+    <EditText
+        android:id="@+id/barkodSiparis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="24dp"
+        android:ems="10"
+        android:hint="Örnek: 10lugumusset"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-                </TextView>
+    <EditText
+        android:id="@+id/adetSiparis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:ems="10"
+        android:hint="Örnek: 1"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/aliciSiparis" />
 
-                <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="50dp"
-                    android:layout_margin="5dp"
-                    android:hint="ÜRÜN ADI"
-                    android:gravity="center">
+    <EditText
+        android:id="@+id/numaraSiparis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:ems="10"
+        android:hint="Örnek: 73456822"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tarihSiparis" />
 
-                </TextView>
-                <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="50dp"
-                    android:layout_margin="5dp"
-                    android:hint="KOMİSYON"
-                    android:gravity="center">
+    <EditText
+        android:id="@+id/aliciSiparis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:ems="10"
+        android:hint="Ayşe Yılmaz"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/numaraSiparis" />
 
-                </TextView>
-                <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="50dp"
-                    android:layout_margin="5dp"
-                    android:hint="ADET"
-                    android:gravity="center">
+    <EditText
+        android:id="@+id/tutarSiparis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:ems="10"
+        android:hint="Örnek: 29.99"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/adetSiparis" />
 
-                </TextView>
-                <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="50dp"
-                    android:layout_margin="5dp"
-                    android:hint="TOPLAM TUTAR"
-                    android:gravity="center">
+    <EditText
+        android:id="@+id/tarihSiparis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:ems="10"
+        android:hint="YYYY-MM-DD"
+        android:inputType="datetime"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/barkodSiparis"
+        tools:ignore="SpeakableTextPresentCheck" />
 
-                </TextView>
-                <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="50dp"
-                    android:layout_margin="5dp"
-                    android:hint="TOPLAM KARGO TUTARI"
-                    android:gravity="center">
-
-                </TextView>
-            </LinearLayout>
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycleView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="1dp"
-                android:layout_marginEnd="1dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintVertical_bias="0.0">
-
-            </androidx.recyclerview.widget.RecyclerView>
-        </LinearLayout>
-    </HorizontalScrollView>
+    <Button
+        android:id="@+id/siparisKaydetButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:onClick="kaydet"
+        android:text="KAYDET"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.838"
+        app:layout_constraintStart_toStartOf="@+id/tutarSiparis"
+        app:layout_constraintTop_toBottomOf="@+id/tutarSiparis" />
 </androidx.constraintlayout.widget.ConstraintLayout>

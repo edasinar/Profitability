@@ -167,8 +167,8 @@ class MainMenuActivity : AppCompatActivity() {
     }
 
     fun clickOrders(view: View){
-        /*val intent = Intent(applicationContext,OrdersActivity::class.java)
-        startActivity(intent)*/
+        val intent = Intent(applicationContext,OrdersActivity::class.java)
+        startActivity(intent)
     }
 
     fun clickStockReceipt(view: View){

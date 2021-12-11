@@ -9,6 +9,7 @@ import android.provider.MediaStore
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.edasinar.profitability_proje_2.ProductsActivity.Companion.addImageArray
 import com.edasinar.profitability_proje_2.ProductsActivity.Companion.imageArray
 import com.edasinar.profitability_proje_2.databinding.ActivityAddNewProductBinding
 import java.util.regex.Matcher
@@ -40,7 +41,10 @@ class AddNewProduct : AppCompatActivity() {
             imageUri = data?.data
             binding.secilenResim.setImageURI(imageUri)
             println(imageUri)
-            imageArray.add(R.id.secilenResim)
+            if (imageUri.toString().isNullOrBlank()) {
+                addImageArray.add("-")
+            } else
+                addImageArray.add(imageUri.toString())
         }
     }
     fun resimSec(view: View){

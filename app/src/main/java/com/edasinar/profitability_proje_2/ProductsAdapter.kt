@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
+import com.edasinar.profitability_proje_2.ProductsActivity.Companion.addImageArray
 import com.edasinar.profitability_proje_2.ProductsActivity.Companion.imageArray
 import com.edasinar.profitability_proje_2.databinding.ActivityProductsBinding
 import com.edasinar.profitability_proje_2.databinding.ProductListItemBinding
@@ -45,7 +47,11 @@ class ProductsAdapter(val index : ArrayList<Int>,val productsDatabase : SQLiteDa
             urunAdi = cursor.getString(urunAd)
         }
         if(position>= imageArray.size){
-            holder.gorsel.setImageResource(R.drawable.bos)
+            if(addImageArray[position- imageArray.size] == "-"){
+                holder.gorsel.setImageResource(R.drawable.bos)
+            }else {
+                holder.gorsel.setImageURI(addImageArray[position - imageArray.size].toUri())
+            }
         }
         else {
             holder.gorsel.setImageResource(imageArray[position])
