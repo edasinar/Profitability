@@ -133,7 +133,7 @@ class OrdersActivity : AppCompatActivity() {
                 println("ürün başarıyla kaydedildi!")
                 //DATABASE'E EKLENECEK KISIM!!
                 var database = this.openOrCreateDatabase("ORDERS", MODE_PRIVATE,null)
-                database.execSQL("INSERT INTO orders (Barkod,SiparişTarihi,SiparişNumarası,Alıcı,Adet,FaturalanacakTutar) VALUES ('${barkod}','${tarih.replace("/","-")}',${numara.toInt()},'${alici}',${adet.toInt()},${tutar.toDouble()})")
+                database.execSQL("INSERT INTO orders (Barkod,SiparişTarihi,SiparişNumarası,Alıcı,Adet,FaturalanacakTutar) VALUES ('${barkod}','${tarih.replace("/",".")}',${numara.toInt()},'${alici}',${adet.toInt()},${tutar.toDouble()})")
 
                 var cursor = database.rawQuery("SELECT * FROM ordering_people_list",null)
                 var isimIx = cursor.getColumnIndex("isimSoyisim")

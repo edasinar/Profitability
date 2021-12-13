@@ -165,6 +165,13 @@ class MainMenuActivity : AppCompatActivity() {
         try {
             displayNetProfitDatabase = this.openOrCreateDatabase("Display_Net_Profit", MODE_PRIVATE,null)
             displayNetProfitDatabase.execSQL("CREATE TABLE IF NOT EXISTS net_profits (id INTEGER PRIMARY KEY, Aylar VARCHAR, BrütKar DOUBLE, DiğerGiderler DOUBLE, NetKar DOUBLE)")
+            var aylar = arrayListOf<String>("OCAK","ŞUBAT","MART","NİSAN","MAYIS","HAZİRAN","TEMMUZ","AĞUSTOS",
+            "EYLÜL","EKİM","KASIM","ARALIK")
+            var i = 0
+            while(i < aylar.size){
+                displayNetProfitDatabase.execSQL("INSERT INTO net_profits(Aylar,BrütKar,DiğerGiderler,NetKar) VALUES ('${aylar[i]}',${0.0},${0.0},${0.0}) ")
+                i+= 1
+            }
         }catch (e :Exception){
             e.printStackTrace()
         }
