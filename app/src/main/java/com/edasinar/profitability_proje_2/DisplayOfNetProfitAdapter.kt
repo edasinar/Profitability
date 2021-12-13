@@ -25,11 +25,11 @@ class DisplayOfNetProfitAdapter(val index : ArrayList<Int>,val profitDatabase : 
     }
 
     override fun onBindViewHolder(holder: DisplayOfNetProfitHolder, position: Int) {
-        var cursor = profitDatabase.rawQuery("SELECT * FROM profits WHERE id = ${index?.get(position)}" , null)
-        var tarihIx = cursor.getColumnIndex("Ay")
-        var giderIx = cursor.getColumnIndex("Gider")
-        var brutIx = cursor.getColumnIndex("Brüt")
-        var netIx = cursor.getColumnIndex("Net")
+        var cursor = profitDatabase.rawQuery("SELECT * FROM net_profits WHERE id = ${index?.get(position)}" , null)
+        var tarihIx = cursor.getColumnIndex("Aylar")
+        var brutIx = cursor.getColumnIndex("BrütKar")
+        var giderIx = cursor.getColumnIndex("DiğerGiderler")
+        var netIx = cursor.getColumnIndex("NetKar")
         while (cursor.moveToNext()){
             holder.ay.text = cursor.getString(tarihIx)
             holder.gider.text = cursor.getString(giderIx)
