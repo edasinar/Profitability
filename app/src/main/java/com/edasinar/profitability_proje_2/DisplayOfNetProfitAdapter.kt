@@ -12,8 +12,8 @@ class DisplayOfNetProfitAdapter(val index : ArrayList<Int>,val profitDatabase : 
     class DisplayOfNetProfitHolder(val binding: DisplayOfNetProfitListItemBinding):
         RecyclerView.ViewHolder(binding.root){
         val ay = binding.aylarListItem
-        val gider = binding.toplamGiderListItem
-        val brüt = binding.brutKazancListItem
+        val gider = binding.digerGiderlerListItem
+        val brüt = binding.brutKarListItem
         val netKar = binding.netKarListItem
     }
 

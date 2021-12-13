@@ -8,207 +8,205 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.edasinar.profitability_proje_2.databinding.ActivityDisplayOfNetProfitBinding
 
 class DisplayOfNetProfitActivity : AppCompatActivity() {
-    private lateinit var netProfitDatabase : SQLiteDatabase
-    private lateinit var stockDatabase: SQLiteDatabase
-    private lateinit var orderDatabase : SQLiteDatabase
-    private lateinit var peopleDatabase: SQLiteDatabase
-    private lateinit var expensesDatabase: SQLiteDatabase
+    private lateinit var orderingPeopleListDatabase : SQLiteDatabase //sipariş veren insanların tek olduğu database
+    private lateinit var ordersDatabase: SQLiteDatabase //siparişlerin olduğu ve hesaplanması gereken verilerin olduğu database
+    private lateinit var productDatabase: SQLiteDatabase //ürünlerin olduğu database
+    private lateinit var stockReceiptDatabase: SQLiteDatabase //stokta kaydedilen ürünlerin olduğu database
+    private lateinit var otherExpensesDatabase : SQLiteDatabase //diğer harcamaların gözüktüğü database
+    private lateinit var displayNetProfitDatabase: SQLiteDatabase //her şeyin gözükeceği database
 
-    lateinit var aylikBorcStok : ArrayList<Double> //gider
-    lateinit var aylikKazancStok: ArrayList<Double> //netkar
-    lateinit var aylikKargoTutarlariSiparis : ArrayList<Double> //kargo ücreti gider
-    lateinit var aylikKomisyonTutarlariSiparis : ArrayList<Double> //gider
-    lateinit var aylikFaturaTutarlariSiparis : ArrayList<Double> //brütgelir
-    lateinit var aylikGiderExpenses : ArrayList<Double> //gider
-
-    private lateinit var binding : ActivityDisplayOfNetProfitBinding
+    private lateinit var binding: ActivityDisplayOfNetProfitBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDisplayOfNetProfitBinding.inflate(layoutInflater)
         var view = binding.root
         setContentView(view)
-        try {
-            //stokGelirHesapla()
-            //siparisGelirHesapla()
-            //giderlerGelirHesapla()
-            //createNetProfitDatabase()
-            netProfitDatabase = this.openOrCreateDatabase("PROFITS" , MODE_PRIVATE, null)
-            var index = arrayListOf<Int>(1,2,3,4,5,6,7,8,9,10,11,12)
-            binding.displayRecycler.layoutManager = LinearLayoutManager(this)
-            val displayOfNetProfitAdapter = DisplayOfNetProfitAdapter(index,netProfitDatabase)
-            binding.displayRecycler.adapter = displayOfNetProfitAdapter
-        }catch (e:Exception){
-            e.printStackTrace()
-        }
+
+        //Aylar,BrütKar,DiğerGiderler,NetKar
+
+
     }
 
-    fun stokGelirHesapla(){
-        try {
-            stockDatabase = this.openOrCreateDatabase("Stock_Receipt", MODE_PRIVATE,null)
-            var cursor: Cursor = stockDatabase.rawQuery("SELECT * FROM stock_receipt",null)
-            var borcIx = cursor.getColumnIndex("Borç")
-            var alacakIx = cursor.getColumnIndex("Alacak")
-            var borclar : ArrayList<Double> = arrayListOf()
-            var alacaklar : ArrayList<Double> = arrayListOf()
+    fun aylikFaturaTutarHesaplama() : HashMap<String, Double>{
+        ordersDatabase = this.openOrCreateDatabase("ORDERS", MODE_PRIVATE,null)
+        var cursorSiparis = ordersDatabase.rawQuery("SELECT * FROM orders ",null)
+
+        var tarih = cursorSiparis.getColumnIndex("SiparişTarihi")
+        val kisiKargo = cursorSiparis.getColumnIndex("FaturalanacakTutar")
+
+        var ay : ArrayList<String> = arrayListOf("01","02","03","04","05","06","07","08","09","10","11","12")
+        var aylikFaturalanacakTutar = HashMap<String,Double>()
+        var i = 0
+        while(i < ay.size){
+            aylikFaturalanacakTutar.put(ay[i],0.0)
+            i+=1
+        }
+        i = 0
+        while(i < ay.size){
+            var aylikFaturaTutar = 0.0
+            while(cursorSiparis.moveToNext()){
+                if(cursorSiparis.getString(tarih).split(".")[1].equals(ay[i])){
+                    aylikFaturaTutar += cursorSiparis.getString(kisiKargo).toDouble()
+                }
+            }
+            aylikFaturalanacakTutar[ay[i]] = aylikFaturaTutar
+            cursorSiparis = ordersDatabase.rawQuery("SELECT * FROM orders ",null)
+            i+=1
+        }
+
+        println(aylikFaturalanacakTutar)
+        return aylikFaturalanacakTutar
+    }
+
+    fun aylikKargoUcretiHesaplama() : HashMap<String,Double>{
+        ordersDatabase = this.openOrCreateDatabase("ORDERS", MODE_PRIVATE,null)
+        var cursorSiparis = ordersDatabase.rawQuery("SELECT * FROM orders ",null)
+        var cursorKisiler = ordersDatabase.rawQuery("SELECT * FROM ordering_people_list",null)
+
+        var kisiKisiler = cursorKisiler.getColumnIndex("isimSoyisim")
+        var kisiSiparisler = cursorSiparis.getColumnIndex("Alıcı")
+        var tarihSiparisler = cursorSiparis.getColumnIndex("SiparişTarihi")
+        var faturaSiparisler = cursorSiparis.getColumnIndex("FaturalanacakTutar")
+
+        var ay : ArrayList<String> = arrayListOf("01","02","03","04","05","06","07","08","09","10","11","12")
+        var kisilerKargoTutari = HashMap<String,Double>()
+
+        var kisiTarih = HashMap<String,String>()
+        while(cursorKisiler.moveToNext()){
+            var kisiFaturaTutar = 0.0
+            var ayDeger = ""
+            while(cursorSiparis.moveToNext()){
+                if(cursorKisiler.getString(kisiKisiler).equals(cursorSiparis.getString(kisiSiparisler))){
+                    kisiFaturaTutar += cursorSiparis.getString(faturaSiparisler).toDouble()
+                    ayDeger = cursorSiparis.getString(tarihSiparisler).split(".")[1]
+                }
+            }
+            var kisiKargoTutar : Double?
+            if(kisiFaturaTutar > 0.0 && kisiFaturaTutar <= 19.99)
+                kisiKargoTutar = 2.99
+            else if(kisiFaturaTutar >= 20.0 && kisiFaturaTutar <= 29.99)
+                kisiKargoTutar = 4.98
+            else if(kisiFaturaTutar >= 30.0 && kisiFaturaTutar <= 49.99)
+                kisiKargoTutar = 8.5
+            else
+                kisiKargoTutar = 11.5
+            kisilerKargoTutari.put(cursorKisiler.getString(kisiKisiler),kisiKargoTutar)
+            kisiTarih.put(cursorKisiler.getString(kisiKisiler),ayDeger)
+            cursorSiparis = ordersDatabase.rawQuery("SELECT * FROM orders ",null)
+        }
+
+        var aylikKargoTutar = HashMap<String,Double>()
+        var i = 0
+        while(i < ay.size){
+            aylikKargoTutar.put(ay[i],0.0)
+            i+=1
+        }
+        i = 0
+        while(i < ay.size){
+            val keys = kisiTarih.filterValues { it == ay[i] }.keys
+            println(ay[i]+". ayin kisileri: " + keys)
+            var kargotutar = 0.0
+            if(!keys.isEmpty()) {
+                for (keys in kisilerKargoTutari.keys) {
+                    kargotutar += kisilerKargoTutari[keys]!!
+                }
+                aylikKargoTutar[ay[i]] = kargotutar
+            }
+            i += 1
+        }
+        println(aylikKargoTutar)
+        return aylikKargoTutar
+    }
+
+    fun aylikKomisyonUcretiHesaplama() : HashMap<String,Double>{
+        ordersDatabase = this.openOrCreateDatabase("ORDERS", MODE_PRIVATE,null)
+        productDatabase = this.openOrCreateDatabase("Product_Database", MODE_PRIVATE,null)
+
+        var cursorSiparis = ordersDatabase.rawQuery("SELECT * FROM orders ",null)
+        var cursorProduct = productDatabase.rawQuery("SELECT * FROM products",null)
+
+        var barkodUrun = cursorProduct.getColumnIndex("ÜrünBarkodu")
+        var komisyonUrun  = cursorProduct.getColumnIndex("Komisyon")
+
+        var barkodSiparis = cursorSiparis.getColumnIndex("Barkod")
+        var faturaUcretSiparis = cursorSiparis.getColumnIndex("FaturalanacakTutar")
+        var tarih = cursorSiparis.getColumnIndex("SiparişTarihi")
+
+        var barkodKomisyon = HashMap<String,Double>()
+        var tarihKomisyonOrani = HashMap<String, Double>()
+        var ay : ArrayList<String> = arrayListOf("01","02","03","04","05","06","07","08","09","10","11","12")
+
+        while(cursorProduct.moveToNext()){
+            barkodKomisyon.put(cursorProduct.getString(barkodUrun),cursorProduct.getDouble(komisyonUrun))
+        }
+        var i = 1
+        while(cursorSiparis.moveToNext()){
+            var komisyon = (cursorSiparis.getString(faturaUcretSiparis).toDouble() * barkodKomisyon[cursorSiparis.getString(barkodSiparis)]!!)/100
+            println(komisyon)
+            var trh = cursorSiparis.getString(tarih) + ".${i}"
+            tarihKomisyonOrani.put(trh,komisyon)
+            i+=1
+        }
+
+        var aylikKomisyonTutar = HashMap<String,Double>()
+        i = 0
+        while(i < ay.size){
+            aylikKomisyonTutar.put(ay[i],0.0)
+            i+=1
+        }
+
+        i = 0
+        while(i < ay.size){
+            val values = tarihKomisyonOrani.filterKeys { it.split(".")[1].equals(ay[i]) }.values
+            println(values)
+            var kargotutar = 0.0
+            if(!values.isEmpty()) {
+                for (k in values) {
+                    kargotutar += k
+                }
+                aylikKomisyonTutar[ay[i]] = kargotutar
+            }
+            i += 1
+        }
+        println(aylikKomisyonTutar)
+        return aylikKomisyonTutar
+    }
+
+    fun aylikBirimAdetHesaplama(){
+        ordersDatabase = this.openOrCreateDatabase("ORDERS", MODE_PRIVATE,null)
+        productDatabase = this.openOrCreateDatabase("Product_Database", MODE_PRIVATE,null)
+        stockReceiptDatabase = this.openOrCreateDatabase("Stock_Receipt", MODE_PRIVATE,null)
+
+        var cursorSiparis = ordersDatabase.rawQuery("SELECT * FROM orders ",null)
+        var cursorProduct = productDatabase.rawQuery("SELECT * FROM products",null)
+    }
+
+    fun aylikDigerHarcamalarHesaplama() : HashMap<String,Double>{
+        otherExpensesDatabase = this.openOrCreateDatabase("Receipt_Of_Expenses", MODE_PRIVATE,null)
+        var cursor = otherExpensesDatabase.rawQuery("SELECT * FROM other_expenses ORDER BY Ay",null)
+        var ay : ArrayList<String> = arrayListOf("01","02","03","04","05","06","07","08","09","10","11","12")
+        val tutarIx = cursor.getColumnIndex("Tutar")
+        val ayIx = cursor.getColumnIndex("Ay")
+        var aylikToplam = HashMap<String,Double>()
+        var i = 0
+        while(i < ay.size){
+            aylikToplam.put(ay[i],0.0)
+            i+=1
+        }
+        var indisKontrol = 0
+        while(indisKontrol < ay.size){
+            var aylikTplm = 0.0
             while (cursor.moveToNext()){
-                borclar.add(cursor.getString(borcIx).toDouble())
-                alacaklar.add(cursor.getString(alacakIx).toDouble())
-            }
-            aylikBorcStok  = arrayListOf()
-            aylikKazancStok = arrayListOf()
-            var i = 0
-            var toplamBorc = 0.0
-            var toplamAlacak = 0.0
-            while(i < borclar.size){
-                toplamBorc+=borclar[i]
-                toplamAlacak+=alacaklar[i]
-                if((i+1)%3 ==0&&i!=0){
-                    aylikBorcStok.add(toplamBorc)
-                    aylikKazancStok.add(toplamAlacak)
-                    toplamBorc = 0.0
-                    toplamAlacak = 0.0
+                if(cursor.getString(ayIx).toString().equals(ay[indisKontrol])){
+                    aylikTplm += cursor.getString(tutarIx).toDouble()
                 }
-                i+=1
             }
-        }catch (e : java.lang.Exception){
-            e.printStackTrace()
-        }
-    }
-
-    fun siparisGelirHesapla(){
-        try {
-            orderDatabase = this.openOrCreateDatabase("ORDERS", MODE_PRIVATE,null)
-            var cursorOrder: Cursor = orderDatabase.rawQuery("SELECT * FROM orders",null)
-            peopleDatabase = this.openOrCreateDatabase("ORDERS", MODE_PRIVATE,null)
-            var cursorPeople : Cursor = peopleDatabase.rawQuery("SELECT * FROM ordering_people_list",null)
-            var isimSoyisimIx = cursorPeople.getColumnIndex("isimSoyisim")
-
-            var aliciIx = cursorOrder.getColumnIndex("Alıcı")
-            var tarihIx = cursorOrder.getColumnIndex("SiparişTarihi")
-            var kargoTutarIx = cursorOrder.getColumnIndex("FaturalananKargoTutarı")
-            var komisyonIx = cursorOrder.getColumnIndex("KomisyonOranı")
-            var faturaUcretiIx = cursorOrder.getColumnIndex("FaturalanacakTutar")
-
-            var tarihler : ArrayList<String> = arrayListOf()
-            var kargoTutarlari : ArrayList<Double> = arrayListOf()
-            var komisyonGiderleri : ArrayList<Double> = arrayListOf()
-            var faturaUcretleri : ArrayList<Double> = arrayListOf()
-            while(cursorPeople.moveToNext()){
-                var k = 0
-                while (cursorOrder.moveToNext()){
-                    if(cursorPeople.getString(isimSoyisimIx) == cursorOrder.getString(aliciIx) && k == 0){
-                        tarihler.add(cursorOrder.getString(tarihIx).split("-")[1])
-                        kargoTutarlari.add(cursorOrder.getString(kargoTutarIx).toDouble())
-                        var komisyonUcreti = (cursorOrder.getString(faturaUcretiIx).toDouble()*
-                                cursorOrder.getString(komisyonIx).toDouble())/100
-                        komisyonGiderleri.add(String.format("%.2f",komisyonUcreti).toDouble())
-                        faturaUcretleri.add(String.format("%.2f",(cursorOrder.getString(faturaUcretiIx).toDouble()-komisyonUcreti)).toDouble())
-
-                        k += 1
-                    }
-                }
-                cursorOrder = orderDatabase.rawQuery("SELECT * FROM orders",null)
-            }
-            var i = 0
-            aylikKargoTutarlariSiparis  = arrayListOf()
-            aylikKomisyonTutarlariSiparis = arrayListOf()
-            aylikFaturaTutarlariSiparis = arrayListOf()
-            while(i < tarihler.distinct().size){
-                var toplam = 0.0
-                var toplamKomisyon = 0.0
-                var toplamFatura = 0.0
-                var j = 0
-                while(j < tarihler.size){
-                  if(tarihler.distinct()[i] == tarihler[j]){
-                      toplam += kargoTutarlari[j]
-                      toplamKomisyon += komisyonGiderleri[j]
-                      toplamFatura += faturaUcretleri[j]
-                  }
-                    j+=1
-                }
-                aylikKargoTutarlariSiparis.add(String.format("%.2f",toplam).toDouble())
-                aylikKomisyonTutarlariSiparis.add(String.format("%.2f",toplamKomisyon).toDouble())
-                aylikFaturaTutarlariSiparis.add(String.format("%.2f",toplamFatura).toDouble())
-                i+=1
-            }
-        }catch (e : Exception){
-            e.printStackTrace()
+            aylikToplam[ay[indisKontrol]] = aylikTplm
+            cursor = otherExpensesDatabase.rawQuery("SELECT * FROM other_expenses ORDER BY Ay",null)
+            indisKontrol += 1
         }
 
-
-    }
-
-    fun giderlerGelirHesapla(){
-        try {
-            expensesDatabase = this.openOrCreateDatabase("Receipt_Of_Expenses", MODE_PRIVATE,null)
-            var cursor : Cursor = expensesDatabase.rawQuery("SELECT * FROM expenses",null)
-            var tarihIx = cursor.getColumnIndex("Tarih")
-            var giderIx = cursor.getColumnIndex("Gider")
-
-            var giderler : ArrayList<Double> = arrayListOf()
-            var tarihler : ArrayList<String> = arrayListOf()
-            while (cursor.moveToNext()){
-                giderler.add(cursor.getString(giderIx).toDouble())
-                tarihler.add(cursor.getString(tarihIx).split("-")[1])
-            }
-
-            var i = 0
-            var trh : ArrayList<String> = arrayListOf("01","02","03","04","05","06","07","08","09","10","11","12")
-            aylikGiderExpenses = arrayListOf()
-            while(i < trh.size){
-                var toplam = 0.0
-                var j = 0
-                while(j < tarihler.size){
-                    if(trh[i] == tarihler[j]){
-                        toplam += giderler[j]
-                    }
-                    j+=1
-                }
-                aylikGiderExpenses.add(String.format("%.2f",toplam).toDouble())
-                i+=1
-            }
-        }catch (e : Exception){
-            e.printStackTrace()
-        }
-
-    }
-
-    fun createNetProfitDatabase(){
-        try {
-
-            netProfitDatabase.execSQL("CREATE TABLE IF NOT EXISTS profits (id INTEGER PRIMARY KEY , Ay VARCHAR, Gider VARCHAR, Brüt VARCHAR,Net VARCHAR)")
-            val aylar : ArrayList<String> = arrayListOf("OCAK","ŞUBAT","MART","NİSAN","MAYIS","HAZİRAN",
-            "TEMMUZ","AĞUSTOS","EYLÜL","EKİM","KASIM","ARALIK")
-
-            var i = 0
-            var gider : ArrayList<Double> = arrayListOf()
-            var brut : ArrayList<Double> = arrayListOf()
-            var net : ArrayList<Double> = arrayListOf()
-            while(i < aylar.size){
-                var giderT = aylikBorcStok[i]+aylikKargoTutarlariSiparis[i]+aylikKomisyonTutarlariSiparis[i]+aylikGiderExpenses[i]
-                var brutT = aylikFaturaTutarlariSiparis[i]-(aylikKargoTutarlariSiparis[i]+aylikKomisyonTutarlariSiparis[i])
-                var netT = aylikKazancStok[i]+brutT-(aylikBorcStok[i]+aylikGiderExpenses[i])
-                gider.add(String.format("%.2f",giderT).toDouble())
-                brut.add(String.format("%.2f",brutT).toDouble())
-                net.add(String.format("%.2f",netT).toDouble())
-                i += 1
-            }
-
-
-            /*i = 0
-            while(i < aylar.size){
-                netProfitDatabase.execSQL("INSERT INTO profits (Ay,Gider,Brüt,Net) VALUES ('${aylar[i]}',${gider[i]},${brut[i]},${net[i]})")
-                i += 1
-            }*/
-
-            var cursor = netProfitDatabase.rawQuery("SELECT * FROM profits",null)
-            var ayIx = cursor.getColumnIndex("Ay")
-            while(cursor.moveToNext()){
-                println(cursor.getString(ayIx))
-            }
-
-        }catch (e : Exception){
-            e.printStackTrace()
-        }
+        println(aylikToplam)
+        return aylikToplam
     }
 }

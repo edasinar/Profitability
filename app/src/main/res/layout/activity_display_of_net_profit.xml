@@ -38,28 +38,28 @@
                     android:textColor="@color/black"></TextView>
 
                 <TextView
-                    android:id="@+id/toplamgiderDisplay"
+                    android:id="@+id/brutDisplay"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:background="#ADB3DF"
                     android:gravity="center"
-                    android:textSize="24dp"
-                    android:text="TOPLAM GİDER"
-                    android:textColor="@color/black"></TextView>
+                    android:text="BRÜT KAR"
+                    android:textColor="@color/black"
+                    android:textSize="24dp"></TextView>
 
                 <TextView
-                    android:id="@+id/brütKazanc"
+                    android:id="@+id/digerGider"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:background="#ADB3DF"
                     android:gravity="center"
-                    android:textSize="24dp"
-                    android:text="BRÜT KAZANÇ"
-                    android:textColor="@color/black"></TextView>
+                    android:text="DİĞER GİDERLER"
+                    android:textColor="@color/black"
+                    android:textSize="24dp"></TextView>
 
                 <TextView
                     android:id="@+id/netKar"
