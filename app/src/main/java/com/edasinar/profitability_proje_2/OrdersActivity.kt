@@ -24,6 +24,11 @@ class OrdersActivity : AppCompatActivity() {
         binding = ActivityOrdersBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+
+        supportActionBar?.title = "         SİPARİŞLER"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         val database = this.openOrCreateDatabase("ORDERS", MODE_PRIVATE,null)
         var cursor = database.rawQuery("SELECT * FROM orders" , null)
         var idIx = cursor.getColumnIndex("id")
@@ -146,6 +151,13 @@ class OrdersActivity : AppCompatActivity() {
                 if(sayac == 0){
                     database.execSQL("INSERT INTO ordering_people_list (isimSoyisim) VALUES ('${alici}')")
                 }
+
+                binding.barkodSiparis.setText(null)
+                binding.tarihSiparis.setText(null)
+                binding.numaraSiparis.setText(null)
+                binding.aliciSiparis.setText(null)
+                binding.adetSiparis.setText(null)
+                binding.tutarSiparis.setText(null)
             }
         }
     }

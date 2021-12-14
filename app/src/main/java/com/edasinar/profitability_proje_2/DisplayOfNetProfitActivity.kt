@@ -21,7 +21,8 @@ class DisplayOfNetProfitActivity : AppCompatActivity() {
         var view = binding.root
         setContentView(view)
 
-
+        supportActionBar?.title = "  AYLIK NET KAR GÖSTERİMİ"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         databaseGuncelleme()
 
@@ -35,6 +36,12 @@ class DisplayOfNetProfitActivity : AppCompatActivity() {
         var komisyon = aylikKomisyonUcretiHesaplama()
         var birimAdet = aylikBirimAdetHesaplama()
         var digerHarcamalar = aylikDigerHarcamalarHesaplama()
+        println(fatura)
+        println(kargo)
+        println(komisyon)
+        println(birimAdet)
+        println(digerHarcamalar)
+
 
         var ay : ArrayList<String> = arrayListOf("01","02","03","04","05","06","07","08","09","10","11","12")
         var aylar = arrayListOf<String>("OCAK","ŞUBAT","MART","NİSAN","MAYIS","HAZİRAN","TEMMUZ","AĞUSTOS",
@@ -53,6 +60,7 @@ class DisplayOfNetProfitActivity : AppCompatActivity() {
             aylikBrutKazanc.put(ay[i],brut)
             i += 1
         }
+        println(aylikBrutKazanc)
         i = 0
         while(i < ay.size){
             displayNetProfitDatabase.execSQL("UPDATE net_profits SET BrütKar = ${aylikBrutKazanc[ay[i]]},DiğerGiderler = ${digerHarcamalar[ay[i]]}, NetKar = ${(aylikBrutKazanc[ay[i]]!!-digerHarcamalar[ay[i]]!!)} WHERE Aylar = '${aylarIslem[ay[i]]}'")
@@ -107,6 +115,7 @@ class DisplayOfNetProfitActivity : AppCompatActivity() {
         var ay : ArrayList<String> = arrayListOf("01","02","03","04","05","06","07","08","09","10","11","12")
         var kisilerKargoTutari = HashMap<String,Double>()
 
+        var k = 0
         var kisiTarih = HashMap<String,String>()
         while(cursorKisiler.moveToNext()){
             var kisiFaturaTutar = 0.0
@@ -126,9 +135,10 @@ class DisplayOfNetProfitActivity : AppCompatActivity() {
                 kisiKargoTutar = 8.5
             else
                 kisiKargoTutar = 11.5
-            kisilerKargoTutari.put(cursorKisiler.getString(kisiKisiler),kisiKargoTutar)
-            kisiTarih.put(cursorKisiler.getString(kisiKisiler),ayDeger)
+            ayDeger += ".${k}"
+            kisilerKargoTutari.put(ayDeger,kisiKargoTutar)
             cursorSiparis = ordersDatabase.rawQuery("SELECT * FROM orders ",null)
+            k += 1
         }
 
         var aylikKargoTutar = HashMap<String,Double>()
@@ -137,7 +147,21 @@ class DisplayOfNetProfitActivity : AppCompatActivity() {
             aylikKargoTutar.put(ay[i],0.0)
             i+=1
         }
+
         i = 0
+        while(i < ay.size){
+            val values = kisilerKargoTutari.filterKeys { it.split(".")[0].equals(ay[i]) }.values
+            var kargotutar = 0.0
+            if(!values.isEmpty()) {
+                for (k in values) {
+                    kargotutar += k
+                }
+                aylikKargoTutar[ay[i]] = kargotutar
+            }
+            i += 1
+        }
+        println(aylikKargoTutar)
+        /*i = 0
         while(i < ay.size){
             val keys = kisiTarih.filterValues { it == ay[i] }.keys
             var kargotutar = 0.0
@@ -148,7 +172,8 @@ class DisplayOfNetProfitActivity : AppCompatActivity() {
                 aylikKargoTutar[ay[i]] = kargotutar
             }
             i += 1
-        }
+        }*/
+        //println(kisilerKargoTutari)
         return aylikKargoTutar
     }
 

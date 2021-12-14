@@ -21,6 +21,11 @@ class ReceiptOfExpensesActivity : AppCompatActivity() {
         binding = ActivityReceiptOfExpensesBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+
+        supportActionBar?.title = "        HARCAMA GİRİŞİ"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         database  = this.openOrCreateDatabase("Receipt_Of_Expenses", MODE_PRIVATE,null)
         database.execSQL("CREATE TABLE IF NOT EXISTS expenses (id INTEGER PRIMARY KEY, Tarih VARCHAR, Gider DOUBLE, Aciklama VARCHAR)")
     }
