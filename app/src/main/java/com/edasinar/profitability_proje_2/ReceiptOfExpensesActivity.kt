@@ -48,19 +48,6 @@ class ReceiptOfExpensesActivity : AppCompatActivity() {
         var gun = binding.gunEditText.getText().toString()
         var gider = binding.toplamGiderEditText.getText().toString()
         var aciklama = binding.aciklamaEditText.getText().toString()
-        /*if(yil.isNullOrBlank() && ay.isNullOrBlank() && gun.isNullOrBlank() && gider.toString().isNullOrBlank()){
-            val alert = AlertDialog.Builder(this)
-            alert.setTitle("UYARI!")
-            alert.setMessage("Tüm alanları boş bıraktınız. Sadece açıklamayı boş bırakabilirsiniz")
-            alert.setNegativeButton("OK"){dialog, which->
-                Toast.makeText(applicationContext,"Try Again", Toast.LENGTH_LONG).show()}
-
-            alert.show()
-            binding.yilEditText.setText(null)
-            binding.ayEditText.setText(null)
-            binding.gunEditText.setText(null)
-            binding.toplamGiderEditText.setText(null)
-        }*/
             if (yil.isNullOrBlank() || ay.isNullOrBlank() || gun.isNullOrBlank() || gider.toString()
                     .isNullOrBlank()) {
                 val alert = AlertDialog.Builder(this)
