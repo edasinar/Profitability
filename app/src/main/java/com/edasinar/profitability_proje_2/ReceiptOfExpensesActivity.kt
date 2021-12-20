@@ -46,13 +46,12 @@ class ReceiptOfExpensesActivity : AppCompatActivity() {
         var yil = binding.yilEditText.getText().toString()
         var ay = binding.ayEditText.getText().toString()
         var gun = binding.gunEditText.getText().toString()
-        var gider = binding.toplamGiderEditText.getText().toString().toDouble()
+        var gider = binding.toplamGiderEditText.getText().toString()
         var aciklama = binding.aciklamaEditText.getText().toString()
-
-        if(yil.isNullOrBlank()||ay.isNullOrBlank()||gun.isNullOrBlank()||gider.toString().isNullOrBlank()){
+        /*if(yil.isNullOrBlank() && ay.isNullOrBlank() && gun.isNullOrBlank() && gider.toString().isNullOrBlank()){
             val alert = AlertDialog.Builder(this)
             alert.setTitle("UYARI!")
-            alert.setMessage("Sadece açıklamayı boş bırakabilirsiniz")
+            alert.setMessage("Tüm alanları boş bıraktınız. Sadece açıklamayı boş bırakabilirsiniz")
             alert.setNegativeButton("OK"){dialog, which->
                 Toast.makeText(applicationContext,"Try Again", Toast.LENGTH_LONG).show()}
 
@@ -61,30 +60,48 @@ class ReceiptOfExpensesActivity : AppCompatActivity() {
             binding.ayEditText.setText(null)
             binding.gunEditText.setText(null)
             binding.toplamGiderEditText.setText(null)
-            binding.aciklamaEditText.setText(null)
-        }else {
-            if(aciklama.isNullOrBlank()){
-                aciklama = "-"
+        }*/
+            if (yil.isNullOrBlank() || ay.isNullOrBlank() || gun.isNullOrBlank() || gider.toString()
+                    .isNullOrBlank()) {
+                val alert = AlertDialog.Builder(this)
+                alert.setTitle("UYARI!")
+                alert.setMessage("Sadece açıklamayı boş bırakabilirsiniz")
+                alert.setNegativeButton("OK") { dialog, which ->
+                    Toast.makeText(applicationContext, "Try Again", Toast.LENGTH_LONG).show()
+                }
+
+                alert.show()
+                binding.yilEditText.setText(null)
+                binding.ayEditText.setText(null)
+                binding.gunEditText.setText(null)
+                binding.toplamGiderEditText.setText(null)
+                binding.aciklamaEditText.setText(null)
             }
-            database.execSQL("INSERT INTO other_expenses (Yıl,Ay,Gün,Tutar,Açıklama) VALUES ('${yil}','${ay}','${gun}',${gider},'${aciklama}')")
-            var cursor = database.rawQuery("SELECT * FROM other_expenses", null)
-            var tari = cursor.getColumnIndex("Yıl")
-            var gide = cursor.getColumnIndex("Tutar")
-            var aciklam = cursor.getColumnIndex("Açıklama")
-            while (cursor.moveToNext()) {
-                println(
-                    cursor.getString(tari) + "  " + cursor.getString(gide) + "  " + cursor.getString(
-                        aciklam
+            else {
+                if (aciklama.isNullOrBlank()) {
+                    aciklama = "-"
+                }
+                var giderr = binding.toplamGiderEditText.getText().toString().toDouble()
+                database.execSQL("INSERT INTO other_expenses (Yıl,Ay,Gün,Tutar,Açıklama) VALUES ('${yil}','${ay}','${gun}',${giderr},'${aciklama}')")
+                var cursor = database.rawQuery("SELECT * FROM other_expenses", null)
+                var tari = cursor.getColumnIndex("Yıl")
+                var gide = cursor.getColumnIndex("Tutar")
+                var aciklam = cursor.getColumnIndex("Açıklama")
+                while (cursor.moveToNext()) {
+                    println(
+                        cursor.getString(tari) + "  " + cursor.getString(gide) + "  " + cursor.getString(
+                            aciklam
+                        )
                     )
-                )
+                }
+                println("veritabanına başarıyla kaydedildi")
+                binding.yilEditText.setText(null)
+                binding.ayEditText.setText(null)
+                binding.gunEditText.setText(null)
+                binding.toplamGiderEditText.setText(null)
+                binding.aciklamaEditText.setText(null)
             }
-            println("veritabanına başarıyla kaydedildi")
-            binding.yilEditText.setText(null)
-            binding.ayEditText.setText(null)
-            binding.gunEditText.setText(null)
-            binding.toplamGiderEditText.setText(null)
-            binding.aciklamaEditText.setText(null)
-        }
+
 
     }
 
