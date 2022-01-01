@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.edasinar.profitability_proje_2.databinding.ActivityProductsBinding
@@ -69,11 +71,23 @@ class ProductsActivity : AppCompatActivity() {
             while (cursor.moveToNext()) {
                 indexFilter.add(cursor.getString(idIx).toInt())
             }
-            binding.barkodEditText.setText(null)
-            binding.isimEditText.setText(null)
-            binding.recycleView.layoutManager = LinearLayoutManager(this)
-            val productAdapter = ProductsAdapter(indexFilter, database)
-            binding.recycleView.adapter = productAdapter
+            if(indexFilter.isEmpty()){
+                val alert = AlertDialog.Builder(this)
+                alert.setTitle("UYARI!")
+                alert.setMessage("böyle isimli bir ürün bulunmamaktadır")
+                alert.setNegativeButton("OK"){dialog, which->
+                    Toast.makeText(applicationContext,"Try Again", Toast.LENGTH_LONG).show()}
+                alert.show()
+                binding.barkodEditText.setText(null)
+                binding.isimEditText.setText(null)
+            }
+            else {
+                binding.barkodEditText.setText(null)
+                binding.isimEditText.setText(null)
+                binding.recycleView.layoutManager = LinearLayoutManager(this)
+                val productAdapter = ProductsAdapter(indexFilter, database)
+                binding.recycleView.adapter = productAdapter
+            }
         }
         else if(!barkod.isNullOrBlank() && isim.isNullOrBlank()){
             var cursor = database.rawQuery(
@@ -86,11 +100,23 @@ class ProductsActivity : AppCompatActivity() {
             while (cursor.moveToNext()) {
                 indexFilter.add(cursor.getString(idIx).toInt())
             }
-            binding.barkodEditText.setText(null)
-            binding.isimEditText.setText(null)
-            binding.recycleView.layoutManager = LinearLayoutManager(this)
-            val productAdapter = ProductsAdapter(indexFilter, database)
-            binding.recycleView.adapter = productAdapter
+            if(indexFilter.isEmpty()){
+                val alert = AlertDialog.Builder(this)
+                alert.setTitle("UYARI!")
+                alert.setMessage("böyle barkodlu bir ürün bulunmamaktadır")
+                alert.setNegativeButton("OK"){dialog, which->
+                    Toast.makeText(applicationContext,"Try Again", Toast.LENGTH_LONG).show()}
+                alert.show()
+                binding.barkodEditText.setText(null)
+                binding.isimEditText.setText(null)
+            }
+            else {
+                binding.barkodEditText.setText(null)
+                binding.isimEditText.setText(null)
+                binding.recycleView.layoutManager = LinearLayoutManager(this)
+                val productAdapter = ProductsAdapter(indexFilter, database)
+                binding.recycleView.adapter = productAdapter
+            }
 
         }
         else {
@@ -104,11 +130,23 @@ class ProductsActivity : AppCompatActivity() {
             while (cursor.moveToNext()) {
                 indexFilter.add(cursor.getString(idIx).toInt())
             }
-            binding.barkodEditText.setText(null)
-            binding.isimEditText.setText(null)
-            binding.recycleView.layoutManager = LinearLayoutManager(this)
-            val productAdapter = ProductsAdapter(indexFilter, database)
-            binding.recycleView.adapter = productAdapter
+            if(indexFilter.isEmpty()){
+                val alert = AlertDialog.Builder(this)
+                alert.setTitle("UYARI!")
+                alert.setMessage("böyle barkodlu bir ürün ya da isimli bir ürün bulunmamaktadır")
+                alert.setNegativeButton("OK"){dialog, which->
+                    Toast.makeText(applicationContext,"Try Again", Toast.LENGTH_LONG).show()}
+                alert.show()
+                binding.barkodEditText.setText(null)
+                binding.isimEditText.setText(null)
+            }
+            else {
+                binding.barkodEditText.setText(null)
+                binding.isimEditText.setText(null)
+                binding.recycleView.layoutManager = LinearLayoutManager(this)
+                val productAdapter = ProductsAdapter(indexFilter, database)
+                binding.recycleView.adapter = productAdapter
+            }
         }
 
 
