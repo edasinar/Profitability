@@ -1,5 +1,6 @@
 package com.edasinar.profitability_proje_2
 
+import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -160,5 +161,10 @@ class OrdersActivity : AppCompatActivity() {
                 binding.tutarSiparis.setText(null)
             }
         }
+    }
+
+    fun topluSatisGir(view : View){
+        val intent = Intent(applicationContext,CrowdsaleActivity::class.java)
+        startActivity(intent)
     }
 }
