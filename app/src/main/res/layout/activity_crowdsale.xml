@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CrowdsaleActivity">
+
+    <TextView
+        android:id="@+id/aciklamaMetni"
+        android:layout_width="354dp"
+        android:layout_height="135dp"
+        android:text="Sipariş Kayıtlarını Excel Dosyası Olarak Yükleyebilirsiniz"
+        android:textColor="#000000"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.034" />
+
+    <Button
+        android:id="@+id/dosyaSecButon"
+        android:layout_width="140dp"
+        android:layout_height="81dp"
+        android:layout_marginStart="28dp"
+        android:backgroundTint="#D3B9DD"
+        android:onClick="dosyaSec"
+        android:text="DOSYA SEÇ"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.346" />
+
+    <Button
+        android:id="@+id/entegreButon"
+        android:layout_width="168dp"
+        android:layout_height="81dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="#367509"
+        android:onClick="entegreEt"
+        android:text="SİPARİŞLERİ ENTEGRE ET"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.779"
+        app:layout_constraintStart_toEndOf="@+id/dosyaSecButon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.347" />
+
+    <TextView
+        android:id="@+id/mesajText"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.638" />
+</androidx.constraintlayout.widget.ConstraintLayout>
