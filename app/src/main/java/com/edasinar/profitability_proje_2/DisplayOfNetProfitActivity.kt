@@ -161,19 +161,6 @@ class DisplayOfNetProfitActivity : AppCompatActivity() {
             i += 1
         }
         println(aylikKargoTutar)
-        /*i = 0
-        while(i < ay.size){
-            val keys = kisiTarih.filterValues { it == ay[i] }.keys
-            var kargotutar = 0.0
-            if(!keys.isEmpty()) {
-                for (keys in kisilerKargoTutari.keys) {
-                    kargotutar += kisilerKargoTutari[keys]!!
-                }
-                aylikKargoTutar[ay[i]] = kargotutar
-            }
-            i += 1
-        }*/
-        //println(kisilerKargoTutari)
         return aylikKargoTutar
     }
 
