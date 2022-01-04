@@ -44,7 +44,7 @@ class CrowdsaleActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "Tekrar Deneyiniz", Toast.LENGTH_LONG)
                     .show()
             }
-
+            binding.mesajText.text = "dosya seçilemedi"
             alert.show()
         }
         else {
@@ -80,7 +80,7 @@ class CrowdsaleActivity : AppCompatActivity() {
                         Toast.makeText(applicationContext, "Tekrar Deneyiniz", Toast.LENGTH_LONG)
                             .show()
                     }
-
+                    binding.mesajText.text = "dosya seçilemedi"
                     alert.show()
                 } else {
                     Toast.makeText(applicationContext,"Dosya Seçme Başarılı",Toast.LENGTH_LONG).show()
@@ -129,10 +129,25 @@ class CrowdsaleActivity : AppCompatActivity() {
             while (cursor.moveToNext()){
                 println(cursor.getString(tarihIx) + "   " + cursor.getString(isimIx))
             }
+            val alert = AlertDialog.Builder(this)
+            alert.setTitle("DOSYA SEÇİLDİ")
+            alert.setMessage("Seçtiğiniz dosya başarılı bir şekilde sisteme entegre edildi")
+            alert.setNeutralButton("OK"){ dialog, which ->
+
+            }
+
+            alert.show()
 
         }
         else{
-            println("dosya seçilmemiştir entegrasyon gerçekleştirilemedi")
+            val alert = AlertDialog.Builder(this)
+            alert.setTitle("DOSYA SEÇİLEMEDİ")
+            alert.setMessage("Dosya sisteme entegre edilemedi. Lütfen tekrar dosya seçin")
+            alert.setNegativeButton("OK"){ dialog, which ->
+
+            }
+
+            alert.show()
         }
     }
 }
