@@ -99,11 +99,15 @@ class CrowdsaleActivity : AppCompatActivity() {
         val alert = AlertDialog.Builder(this)
         alert.setTitle("SELECTION")
         alert.setMessage("Aşağıdaki dosyalardan birini seçiniz")
-        alert.setPositiveButton("crowdsaleMart") { dialog, which ->
+        alert.setNeutralButton("Temmuz.txt"){ dialog, which ->
+            fileName = "crowdsaleTemmuz.txt"
+            dosyaOku(fileName)
+        }
+        alert.setPositiveButton("Mart.csv") { dialog, which ->
             fileName = "crowdsaleMart.csv"
             dosyaOku(fileName)
         }
-        alert.setNegativeButton("crowdsaleMayis") { dialog, which ->
+        alert.setNegativeButton("Mayıs.csv") { dialog, which ->
             fileName = "crowdsaleMayis.csv"
             dosyaOku(fileName)
         }

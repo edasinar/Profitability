@@ -1,0 +1,20 @@
+Barkod,SiparişTarihi,SiparişNumarası,Alıcı,Adet,FaturalanacakTutar
+MrsVnsYzk,2021.07.12,889213453,Meliha Karaarslan,2,19.99
+5LiGoldset7,2021.07.12,889213453,Meliha Karaarslan,1,111
+3lugoldset,2021.07.12,889213453,Meliha Karaarslan,1,19.99
+asimetrikcentik,2021.07.12,889254365,Ela Tokgöz,2,29.99
+incezincir1,2021.07.12,889234127,Talha Kara,1,25.99
+4LuGoldset3,2021.07.12,889287312,Leyla Guru,2,37
+GozlukYzk02,2021.07.12,889287312,Leyla Guru,1,19.99
+MinimalKalp,2021.07.12,889281539,Hatice Sultan,1,19.99
+4LuGoldset4,2021.07.12,889201436,Ezel Bayraktar,3,29.99
+YvrlkYzk1,2021.07.12,889235176,Neva Seçkin,1,25.99
+asimetrikcentik,2021.07.12,889215407,Eyşan Tezcan,1,29.99
+İnceHltYzk03,2021.07.27,889250157,Fatma Gül,2,19.99
+hasıryzk1,2021.07.27,889213250,Yaren Toy,1,25.99
+4LuGoldset4,2021.07.27,889213250,Yaren Toy,1,29.99
+3lugoldset,2021.07.27,889213406,Alım Sert,1,19.99
+hasıryzk1,2021.07.27,889213406,Alım Sert,1,25.99
+MinimalKalp,2021.07.27,889205754,İnci Erguvan,2,19.99
+DgmYzk1,2021.07.27,889234106,Derya Ferah,1,25.99
+YunusBlkYzk04,2021.07.27,889234106,Derya Ferah,2,19.99
